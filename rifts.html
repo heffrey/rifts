@@ -1,0 +1,214 @@
+<!-- Copyright 2019 Jeff Whiteside
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>RIFTS® Campaign Manager</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./rifts.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.serializeObject.min.js"></script>
+    <script src="js/popper.min.js"></script>      
+    <script src="js/bootstrap.min.js"></script>   
+    <script src="js/bootstrap3-typeahead.min.js"></script>  
+    <script src="js/bootstrap.confirmation.min.js"></script>  
+    <script src="initialize.js"></script>  
+    
+  </head>
+    
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#main">RIFTS&reg Campaign Manager</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#characters">Characters</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#combat">Combat</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#gmlog">GM Log</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        
+        <button type="button" id="dice-button" class="btn btn-lg btn-primary">Dice</button>
+        
+      </div>
+    </nav>  
+    
+    <div class="container" id="top-container">
+      <div class="row" id="frame-container">
+        <div class="container" id="main-container"></div>
+        <iframe id="dice-frame" class="shadow-lg" src="/roller/roll.html" width=700 height=300 style="">This isn't working right.</iframe>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="container bg-white rounded m-5 p-3" id="character">
+        <h2>Character Sheet</h2>
+        <form id="character-form">
+          <div id="character-accordion">
+            <div class="card">
+              <div class="card-header" id="character-overview">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-overview" aria-expanded="true" aria-controls="collapse-overview">
+                    Character Overview
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse-overview" class="collapse show" aria-labelledby="character-overview" data-parent="#character-accordion">
+                <div class="card-body">
+                  
+                  
+                  <div class="form-row">
+                    <div class="col-3">
+                      <label>Name</label>
+                      <input type="text" id="character-name" class="form-control order-1" placeholder="Name" name="name">
+                    </div>
+                    <div class="col">
+                      <label>True Name</label>
+                      <input type="text" class="form-control order-1" placeholder="True Name" name="truename">
+                    </div>
+                    <div class="col-2">
+                      <label>Sex</label>
+                      <input type="text" class="form-control order-1" placeholder="Sex" name="sex">
+                    </div>
+                    <div class="col-2">
+                      <label>Age</label>
+                      <input type="text" class="form-control order-1" placeholder="Age" name="age">
+                    </div>
+                  </div>
+                  
+                  <div class="form-row mt-2">
+                    
+                    <div class="col">
+                      <label>Occupation</label>
+                      <input type="text" class="form-control" placeholder="Occupation" name="occupation">
+                    </div>
+                    <div class="col-5">
+                      <label>O.C.C. / R.C.C.</label>
+                      <input type="text" id="character-class" class="form-control" placeholder="Character Class" name="occrcc">
+                    </div>
+                    <div class="col-2">
+                      <label>Height</label>
+                      <input type="text" class="form-control" placeholder="Height" name="height">
+                    </div>                
+                    <div class="col-2">
+                      <label>Weight</label>
+                      <input type="text" class="form-control" placeholder="Weight" name="weight">
+                    </div>    
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="col">
+                      <label>Native Language(s) <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Languages" data-html="true" data-content="<b>American</b>: English, the universal language of the American continents <br><b>Techno-can</b>: Basic but modified American/English; a universal computer/techno language used in high-tech computer communications and systems. Not used as an everyday spoken language but as a specialized tech-language developed for technical journals and as a universal computer language <br><b>Spanish</b>: the second major tongue of the Americas <br> <b>Japanese <br> Chinese <br> Euro</b>: A blend of Russian, German, and Polish <br><b>Dragonese</b>: Elven from the Palladium world <br><b>Gobblely</b>: Goblin, hob-goblin, orc, and ogre from the Palladium world <br><b>Faerie Speak</b>: Faerie folk as found in the Palladium world">?</a></label>
+                      <input type="text" class="form-control" placeholder="Languages" name="languages">
+                    </div>
+                    <div class="col">
+                      <label>Origin</label>
+                      <input type="text" class="form-control" placeholder="Family Origin" name="familyOrigin">
+                    </div>                  
+                    <div class="col-3">
+                      <label>Alignment <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</a></label>
+                      <select class="custom-select" name="alignment">
+                        <option selected>Alignment</option>
+                        <option value="1">Principled</option>
+                        <option value="2">Scrupulous</option>
+                        <option value="3">Unprincipled</option>
+                        <option value="4">Anarchist</option>
+                        <option value="5">Aberrant</option>
+                        <option value="6">Miscreant</option>
+                        <option value="7">Diabolic</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="col">
+                      <label>I.Q. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Intelligence Quotient" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="iq">
+                    </div>
+                    <div class="col">
+                      <label>M.E. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Mental Endurance" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="me">
+                    </div>
+                    <div class="col">
+                      <label>M.A. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Mental Affinity" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ma">
+                    </div>
+                    <div class="col">
+                      <label>P.S. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Strength" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ps">
+                    </div>
+                    <div class="col">
+                      <label>P.P. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Prowess" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pp">
+                    </div>
+                    <div class="col">
+                      <label>P.E. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Endurance" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pe">
+                    </div>
+                    <div class="col">
+                      <label>P.B. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Beauty" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pb">
+                    </div>
+                    <div class="col">
+                      <label>Spd <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Speed" data-html="true" data-content="TODO">?</a></label>
+                      <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="spd">
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Collapsible Group Item #2
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#character-accordion">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div> 
+    
+    <footer class="footer">
+      <div class="container">
+        <small>
+          RIFTS® and all other materials © Copyright <a href="https://palladium-store.com/">Palladium Books Inc.</a> and Kevin Siembieda.  All rights reserved.
+        </small> </div>
+        </footer>
+        </body>
+      </html>

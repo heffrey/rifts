@@ -1,0 +1,552 @@
+body {
+  font: 14px Consolas, monaco, monospace;
+  margin: 20px;
+  background-color: #fff;
+}
+
+img {
+  float: left;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+button {
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  border-style: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor: pointer;
+    color: #fff;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: bottom;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+/* pct styles */
+
+.pct {
+  position: relative;
+
+  cursor: pointer;
+  width: 128px;
+  height: 64px;
+  
+  padding: 0px;
+  margin: 0px;
+  /*  disable highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                           supported by Chrome and Opera */
+}
+
+.fa {
+  position: absolute;
+  font-weight: 550;
+  top: 38%;
+  left: 25px;
+}
+
+.fat {
+  position: absolute;
+  font-size: 8px;
+  color: #777; 
+
+  text-align: center;
+  width: 15px;
+  top: 20%;
+  left: 30px;
+  transform: rotate(30deg);  
+  -ms-transform: rotate(30deg); /* IE 9 */
+  -webkit-transform: rotate(30deg); /* Safari */ 
+}
+.fab {
+  position: absolute;
+  font-size: 8px;
+  color: #777; 
+
+  text-align: center;
+  width: 15px;
+  top: 65%;
+  left: 30px;
+  transform: rotate(-30deg);  
+  -ms-transform: rotate(-30deg); /* IE 9 */
+  -webkit-transform: rotate(-30deg); /* Safari */ }
+
+.fb {
+  position: absolute;
+  font-weight: 550;
+  top: 38%;
+  left: 92px;  
+}
+
+.fbl {
+  position: absolute;
+  font-size: 8px;
+  color: #777; 
+  font-weight: 550;
+  top: 38%;
+  left: 78px;  
+  transform: rotate(30deg);  
+  -ms-transform: rotate(30deg); /* IE 9 */
+  -webkit-transform: rotate(30deg); /* Safari */   
+}
+
+.fbr {
+  position: absolute;
+  font-size: 8px;
+  color: #777; 
+  font-weight: 550;
+  top: 38%;
+  left: 110px;
+  transform: rotate(-30deg);  
+  -ms-transform: rotate(-30deg); /* IE 9 */
+  -webkit-transform: rotate(-30deg); /* Safari */    
+}
+
+
+/* D12 styles */ 
+.d12 {
+  position: relative;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;  
+  
+  margin: 0px;
+
+/*  disable highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                           supported by Chrome and Opera */
+}
+
+.d12f0 { 
+  position: absolute;
+  font-weight: 550;
+  font-size: 16px;
+  top: 42px;
+  left: 32px;  
+
+  transform: translate(-50%, -100%);
+}
+
+.d12f1 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 7px;
+  width: 15px;
+  text-align: center;
+  top: 14px;
+  left: 15px;  
+ 
+ transform: rotate(180deg);  
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari */   
+}
+
+.d12f2 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 7px;
+  width: 15px;
+  text-align: center;
+  top: 14px;
+  left: 35px;  
+ 
+  transform: rotate(180deg);  
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari */   
+}
+
+.d12f3 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 9px;
+  width: 15px;
+  text-align: center;
+  top: 32px;
+  left: 42px;  
+ 
+  transform: rotate(32deg);  
+  -ms-transform: rotate(32deg); /* IE 9 */
+  -webkit-transform: rotate(32deg); /* Safari */   
+}
+
+.d12f4 { 
+  position: absolute;
+  font-weight: 500;
+  color: #777; 
+  font-size: 5px;
+  width: 15px;
+  text-align: center;
+  top: 46px;
+  left: 25px;  
+ 
+  transform: rotate(-45deg);  
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Safari */   
+}
+
+.d12f5 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 9px;
+  width: 15px;
+  text-align: center;
+  top: 32px;
+  left: 8px;  
+ 
+  transform: rotate(-32deg);  
+  -ms-transform: rotate(-32deg); /* IE 9 */
+  -webkit-transform: rotate(-32deg); /* Safari */   
+}
+
+/* d8 styles */
+.d8 {
+  position: relative;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;  
+  
+  margin: 0px;
+
+/*  disable highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                           supported by Chrome and Opera */
+}
+
+
+.d8f0 { 
+  position: absolute;
+  font-weight: 550;
+  font-size: 16px;
+  top: 36px;
+  left: 32px;  
+
+  transform: translate(-50%, -100%);
+}
+
+.d8f1 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 7px;
+  width: 15px;
+  text-align: center;
+  top: 18px;
+  left: 13px;  
+ 
+ transform: rotate(45deg);  
+  -ms-transform: rotate(45deg); /* IE 9 */
+  -webkit-transform: rotate(45deg); /* Safari */   
+}
+
+.d8f2 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 7px;
+  width: 15px;
+  text-align: center;
+  top: 18px;
+  left: 36px;  
+ 
+  transform: rotate(-45deg);  
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Safari */   
+}
+
+.d8f3 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 10px;
+  width: 15px;
+  text-align: center;
+  top: 35px;
+  left: 25px;  
+ 
+  transform: rotate(180deg);  
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari */   
+}
+
+/* d6 styles */
+.d6 {
+  position: relative;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;  
+  
+  margin: 0px;
+
+  /* disable highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                           supported by Chrome and Opera */
+}
+
+.d6f0 { 
+  position: absolute;
+  font-size: 24px;
+  font-weight: 550;
+  top: 20px;
+  left: 32px;
+  transform: translate(-50%, -10%);
+}
+
+/* d4 styles */
+.d4 {
+  position: relative;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;  
+  
+  margin: 0px;
+
+  /* disable highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                           supported by Chrome and Opera */
+}
+
+.d4f0 { 
+  position: absolute;
+  font-weight: 550;
+  font-size: 16px;
+  top: 36px;
+  left: 32px;  
+
+  transform: translate(-50%, -100%);
+}
+
+.d4f1 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 12px;
+  width: 15px;
+  text-align: center;
+  top: 36px;
+  left: 36px;  
+ 
+ transform: rotate(-215deg);  
+  -ms-transform: rotate(-215deg); /* IE 9 */
+  -webkit-transform: rotate(-215deg); /* Safari */   
+}
+
+.d4f2 { 
+  position: absolute;
+  font-weight: 550;
+  color: #777; 
+  font-size: 12px;
+  width: 15px;
+  text-align: center;
+  top: 36px;
+  left: 14px;  
+ 
+  transform: rotate(215deg);  
+  -ms-transform: rotate(215deg); /* IE 9 */
+  -webkit-transform: rotate(215deg); /* Safari */   
+}
+
+
+/* d20 styles */
+.d20 {
+  position: relative;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;  
+  
+  margin: 0px;
+
+/*  disable highlighting */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                           supported by Chrome and Opera */
+}
+
+.d20f0 { 
+  position: absolute;
+  font-weight: 550;
+  top: 44px;
+  left: 32px;
+  transform: translate(-50%, -100%);
+}
+
+.d20f1 { 
+  position: absolute;
+  color: #777; 
+  font-size: 10px;
+ 
+
+  top: 28%;
+  left: 18%;
+  
+  width: 15px;
+  text-align: center;
+  
+
+  transform: rotate(-55deg);  
+  -ms-transform: rotate(-55deg); /* IE 9 */
+  -webkit-transform: rotate(-55deg); /* Safari */ 
+}
+
+.d20f4 { 
+  position: absolute;
+  color: #777; 
+  font-size: 10px;
+  top: 28%;
+  left: 60%;
+  width: 15px;
+  text-align: center;
+
+  transform: rotate(55deg);  
+  -ms-transform: rotate(55deg); /* IE 9 */
+  -webkit-transform: rotate(55deg); /* Safari */ 
+}
+
+.d20f7 { 
+  position: absolute;
+  color: #777;
+  font-size: 10px;
+  top: 44px;
+  left: 25px;
+  width: 15px;
+  text-align: center;
+
+  transform: rotate(180deg);  
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari */ 
+}
+
+.d20f9 { 
+  position: absolute;
+  color: #777;
+  font-size: 6px;
+  width: 15px;
+  text-align: center;
+  top: 34px;
+  left: 5px;
+  transform: rotate(-120deg);  
+  -ms-transform: rotate(-120deg); /* IE 9 */
+  -webkit-transform: rotate(-120deg); /* Safari */ 
+}
+
+.d20f5 { 
+  position: absolute;
+  color: #777;
+  font-size: 6px;
+  width: 15px;
+  text-align: center;
+  top: 34px;
+  left: 45px;
+  transform: rotate(120deg);  
+  -ms-transform: rotate(120deg); /* IE 9 */
+  -webkit-transform: rotate(120deg); /* Safari */ 
+}
+
+.d20f6 { 
+  position: absolute;
+  color: #777;
+  font-size: 10px;
+  top: 32px;
+  left: 50px;
+  transform: translate(-50%, -50%);
+  transform: rotate(155deg);  
+  -ms-transform: rotate(155deg); /* IE 9 */
+  -webkit-transform: rotate(155deg); /* Safari */ 
+}
+
+
+.d20f3 { 
+  position: absolute;
+  color: #777;
+  font-size: 6px;
+  width: 15px;
+  text-align: center;
+  top: 9px;
+  left: 50%;
+
+  transform: rotate(30deg);  
+  -ms-transform: rotate(30deg); /* IE 9 */
+  -webkit-transform: rotate(30deg); /* Safari */ 
+}
+
+.d20f2 { 
+  position: absolute;
+  color: #777;
+  font-size: 6px;
+  width: 15px;
+  text-align: center;
+  top: 9px;
+  left: 25%;
+  transform: rotate(-30deg);  
+  -ms-transform: rotate(-30deg); /* IE 9 */
+  -webkit-transform: rotate(-30deg); /* Safari */ 
+}
+
+
+.d20f6 { 
+  position: absolute;
+  color: #777;
+  font-size: 6px;
+  top: 45px;
+  left: 40px;
+  width: 15px;
+  text-align: center;
+
+  transform: rotate(-220deg);  
+  -ms-transform: rotate(-220deg); /* IE 9 */
+  -webkit-transform: rotate(-220deg); /* Safari */ 
+}
+
+.d20f8 { 
+  position: absolute;
+  color: #777;
+  font-size: 6px;
+  width: 15px;
+  text-align: center;
+  top: 45px;
+  left: 10px;
+
+  transform: rotate(220deg);  
+  -ms-transform: rotate(220deg); /* IE 9 */
+  -webkit-transform: rotate(220deg); /* Safari */
+} 
