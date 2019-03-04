@@ -12,4 +12,4 @@ setup http-server:
 ## Installation
 1. Deploy code into local dir
 2. start node `npx http-server`
-3. browse to http://127.0.0.1:8080
+3. browse to http://localhost:8080
