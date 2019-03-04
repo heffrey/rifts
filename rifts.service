@@ -1,0 +1,12 @@
+[Unit]
+Description=RIFTS
+
+[Service]
+ExecStart=/usr/etc/rifts.sh
+Restart=always
+
+User=node
+Group=nogroup
+
+[Install]
+WantedBy=multi-user.target
