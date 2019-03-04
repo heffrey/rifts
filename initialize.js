@@ -6,15 +6,14 @@
 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+var characters;
+var gm_log = [];
+
 function loadClasses () {
   $.get("classes.json", function(data){
     $("#character-class").typeahead({ source:data });
   },'json');
 }
-
-var characters = new Object();
-
-var gm_log = [];
 
 $(function () {
   $("#dice-button").click(function () {$(`#dice-frame`).fadeToggle()})
@@ -128,6 +127,8 @@ function setView_char (callback)
     $(div2).append(character_card(b));
   });
   
+  $(div).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
+ 
   $("#main-container").html(div);
   $("img.cardicon").css("cursor", "pointer");
   callback();
@@ -384,6 +385,8 @@ hobbies and other interests.">?</a></label>
 
 function common_charView()
 {
+  $("a.addchr").click(function (a) { setView_clicked (a) });
+  
   $('[data-toggle="edit"').click(function (a)
   {
     setView_editChar($(this));
@@ -400,8 +403,14 @@ function common_writeChar()
 {
   
   var character = $("#character-form").serializeObject();
-  if (character.name != "" )
+  if (character.name != "" && characters )
   {
+    characters[character.name] = character;
+    localStorage.setItem("characters",JSON.stringify(characters));
+  }
+  else if (character.name != "")
+  {
+    characters = new Object();
     characters[character.name] = character;
     localStorage.setItem("characters",JSON.stringify(characters));
   }
@@ -411,6 +420,7 @@ function common_charFunc()
 {
   $('[data-toggle="popover"]').popover();
   $('[data-toggle="collapse"]').collapse();
+
   $("#character-form").submit(function (a) {
     a.preventDefault();
     common_writeChar();
@@ -471,7 +481,6 @@ function setView(clicked)
       $("#main-container").show();
     });
     break;
-    
     
     case "#editchar":
     setView_editChar();
