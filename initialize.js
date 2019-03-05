@@ -25,7 +25,7 @@ $(function () {
 });
 
 $(function () {
-  $("a").click(function (a) { setView_clicked (a) })
+  $("a").click(function (a) { setView_clicked (a); $(".popover").remove();})
 });
 
 function setView_main (callback)
@@ -60,6 +60,20 @@ function deleteCharacter(a)
   $(`[data-character-card="${name}"]`).fadeOut();
 }
 
+function bag_render (a)
+{
+  if (a == "")
+  {
+    return ("Empty.<br /> ");
+  } 
+  else
+  {
+    var bag = "";
+    $.each(a,function(a, b) { $.each(b, function (a, b) { bag = `${a}: ${b} <br /> ${bag}` }) });
+    return bag;
+  }  
+}
+
 function character_card (b)
 {
   return (`<div class="col" data-character-card="${b.name}"><div class="card m-3" style="width: 275px;">` +
@@ -74,11 +88,27 @@ function character_card (b)
   
   `<div class="card-body">`
   + `<img src="head.png" style="position: relative; float: left; margin-right: .85rem;">
-  <img src="sword.png" class="cardicon m-1"><img src="armor.png" class="cardicon m-1"><img src="tire.png" class="cardicon m-1"><img src="pouch.png" class="cardicon m-1"><img src="magic.png" class="cardicon m-1"><img src="psi.png" class="cardicon m-1">` +
+  
+  
+  <img src="sword.png" class="cardicon m-1"  data-bag="weapon" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Weapons" data-content="${bag_render(b.weapon)} <br /> Click to add weapons.">
+  
+  <img src="armor.png" class="cardicon m-1" data-bag="armor" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Armor" data-content="${bag_render(b.armor)}  <br /> Click to add armor.">
+  
+  <img src="tire.png" class="cardicon m-1" data-bag="vehicle" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Vehicle" data-content="${bag_render(b.vehicle)}  <br /> Click to add vehicles.">
+  
+  <img src="pouch.png" class="cardicon m-1" data-bag="loot" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Loot and Spoils" data-content="${bag_render(b.loot)}  <br /> Click to add loot.">
+  
+  <img src="magic.png" class="cardicon m-1">
+  
+  <img src="psi.png" class="cardicon m-1">` +
   `</div>` +
   
   // b.exp
-  `<div class="m-1">${b.exp} / 2500 xp <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Add experience" data-html="true" data-content="Use this button to instantly add experience.">+</a></div>` +
+  `<div class="m-1">${b.exp} / 2500 xp <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Experience" data-html="true" data-content="Use this button to instantly add experience.">+</a></div>` +
+
+  
+  // b.exp
+  `<div class="m-1">${b.credits} credits <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Credits" data-html="true" data-content="Use this button to instantly add credits.">+</a></div>` +
   
   // b.sdc/mdc
   `<div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> ${b.sdc} SDC`
@@ -209,7 +239,7 @@ function setView_addChar(callback)
   </div>
   <div class="form-row mt-2">
   <div class="col">
-  <label>Native Language(s) <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Languages" data-html="true" data-content="<b>American</b>: English, the universal language of the American continents <br><b>Techno-can</b>: Basic but modified American/English; a universal computer/techno language used in high-tech computer communications and systems. Not used as an everyday spoken language but as a specialized tech-language developed for technical journals and as a universal computer language <br><b>Spanish</b>: the second major tongue of the Americas <br> <b>Japanese <br> Chinese <br> Euro</b>: A blend of Russian, German, and Polish <br><b>Dragonese</b>: Elven from the Palladium world <br><b>Gobblely</b>: Goblin, hob-goblin, orc, and ogre from the Palladium world <br><b>Faerie Speak</b>: Faerie folk as found in the Palladium world">?</a></label>
+  <label>Native Language(s) <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge badge-pill badge-primary pointer" title="Languages" data-html="true" data-content="<b>American</b>: English, the universal language of the American continents <br><b>Techno-can</b>: Basic but modified American/English; a universal computer/techno language used in high-tech computer communications and systems. Not used as an everyday spoken language but as a specialized tech-language developed for technical journals and as a universal computer language <br><b>Spanish</b>: the second major tongue of the Americas <br> <b>Japanese <br> Chinese <br> Euro</b>: A blend of Russian, German, and Polish <br><b>Dragonese</b>: Elven from the Palladium world <br><b>Gobblely</b>: Goblin, hob-goblin, orc, and ogre from the Palladium world <br><b>Faerie Speak</b>: Faerie folk as found in the Palladium world">?</a></label>
   <input type="text" class="form-control" placeholder="Languages" name="languages">
   </div>
   <div class="col">
@@ -217,7 +247,7 @@ function setView_addChar(callback)
   <input type="text" class="form-control" placeholder="Family Origin" name="familyOrigin">
   </div>                  
   <div class="col-3">
-  <label>Alignment <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</a></label>
+  <label>Alignment <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</a></label>
   <select class="custom-select" name="alignment">
   <option selected>Alignment</option>
   <option value="1">Principled</option>
@@ -232,7 +262,7 @@ function setView_addChar(callback)
   </div>
   <div class="form-row mt-2">
   <div class="col">
-  <label>I.Q. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Intelligence Quotient" data-html="true" data-content="Indicates the character's intelligence.
+  <label>I.Q. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Intelligence Quotient" data-html="true" data-content="Indicates the character's intelligence.
   The exact I.Q. is equal to the I.Q. attribute multiplied times ten. Characters
   with an I.Q. of 1 -6 are morons and should be played like the
   classic dumb lug. However, having a low I.Q. does not necessarily
@@ -246,13 +276,13 @@ function setView_addChar(callback)
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="iq">
   </div>
   <div class="col">
-  <label>M.E. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Mental Endurance" data-html="true" data-content="Measures the amount of mental and
+  <label>M.E. <a href="#" data-toggle="popover" tabindex="-1" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Mental Endurance" data-html="true" data-content="Measures the amount of mental and
   emotional stress the character can withstand. M.E. 1 6 or better provides
   a bonus to save vs psionic attacks and insanity.">?</a></label>
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="me">
   </div>
   <div class="col">
-  <label>M.A. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Mental Affinity" data-html="true" data-content="Represents the character' s I ikeability, personal
+  <label>M.A. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Mental Affinity" data-html="true" data-content="Represents the character' s I ikeability, personal
   charm and charisma. Natural leaders, with an M.A. of 16 or
   higher, have a bonus to invoke trust or intimidation in others. A person
   with a high M.A. may appear trustworthy to some, but intimidating to
@@ -264,7 +294,7 @@ function setView_addChar(callback)
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ma">
   </div>
   <div class="col">
-  <label>P.S. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Strength" data-html="true" data-content="This is the raw physical power of a character.
+  <label>P.S. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Physical Strength" data-html="true" data-content="This is the raw physical power of a character.
   Any character with a P.S. of 16 or better receives a bonus to damage
   an opponent in hand to hand combat. This bonus is applied to
   punch and kick attacks, as well as handheld weapons such as a club,
@@ -272,13 +302,13 @@ function setView_addChar(callback)
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ps">
   </div>
   <div class="col">
-  <label>P.P. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Prowess" data-html="true" data-content="Shows the degree of dexterity and agility
+  <label>P.P. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Physical Prowess" data-html="true" data-content="Shows the degree of dexterity and agility
   of the character. A P.P. of 16 or higher is rewarded with bonuses to
   strike, parry and dodge.">?</a></label>
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pp">
   </div>
   <div class="col">
-  <label>P.E. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Endurance" data-html="true" data-content="Demonstrates the character's stamina
+  <label>P.E. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Physical Endurance" data-html="true" data-content="Demonstrates the character's stamina
   and durability. The amount of physical punishment and resistance to fatigue,
   disease, and poison (and magic too) are determined by P.E. Characters
   with a P.E. of 1 6 or higher receive a bonus to save vs coma!
@@ -287,13 +317,13 @@ function setView_addChar(callback)
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pe">
   </div>
   <div class="col">
-  <label>P.B. <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Physical Beauty" data-html="true" data-content="An indication of the physical attractiveness
+  <label>P.B. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Physical Beauty" data-html="true" data-content="An indication of the physical attractiveness
   of the character. A P.B. of 16 or better is rewarded with a bonus to
   charm or impress.">?</a></label>
   <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pb">
   </div>
   <div class="col">
-  <label>Spd <a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Speed" data-html="true" data-content="This is how fast the character can run. The character's
+  <label>Spd <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge badge-pill badge-primary pointer" title="Speed" data-html="true" data-content="This is how fast the character can run. The character's
   Speed x20 is the number of yards or meters he can run in one minute.
   Speed x5 is the number of yards/meters covered in a melee round (15
   seconds). Dividing the distance covered in a melee round by the character's number of attacks indicates how far he can move on each attack.">?</a></label>
@@ -343,6 +373,7 @@ hobbies and other interests.">?</a></label>
       </div>
     </div>
   </div>
+  </div>
   <div class="card">
   <div class="card-header" id="character-progress">
   <h5 class="mb-0">
@@ -369,6 +400,14 @@ hobbies and other interests.">?</a></label>
       <div class="col">
         <label>Salary<a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-primary pointer" title="Salary" data-html="true" data-content="Credits accumulated based on job or occupation.">?</a></label>
         <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="salary">
+        
+        <input type="hidden" name="weapon">
+        <input type="hidden" name="armor">
+        <input type="hidden" name="vehicle">
+        <input type="hidden" name="loot">
+        <input type="hidden" name="magic">
+        <input type="hidden" name="psionic">
+
       </div>
     </div>
   </div>
@@ -387,10 +426,99 @@ function common_charView()
 {
   $("a.addchr").click(function (a) { setView_clicked (a) });
   
-  $('[data-toggle="edit"').click(function (a)
+  $('[data-toggle="edit"]').click(function (a)
   {
     setView_editChar($(this));
   });
+  
+  $('[data-bag]').click( function(a)
+  {
+    console.log($(this).attr("data-bag"));
+    
+    var db = $(this).attr("data-bag");
+    var DataBag = new Object();
+    
+    switch (db)
+    {
+      case "weapon":
+        DataBag.title = "Weapons";
+        DataBag.key = "weapon"
+        DataBag.value = "damage"
+        DataBag.keyPretty = "Weapon";
+        DataBag.valuePretty = "Dmg.";
+      break;
+      
+      case "armor":
+        DataBag.title = "Armor";
+        DataBag.key = "armor"
+        DataBag.value = "sdc"
+        DataBag.keyPretty = "Armor";
+        DataBag.valuePretty = "SDC";
+      break;
+      
+      case "vehicle":
+        DataBag.title = "Vehicles";
+        DataBag.key = "vehicle"
+        DataBag.value = "xdc"
+        DataBag.keyPretty = "Vehicle";
+        DataBag.valuePretty = "XDC+Dmg";
+      break;
+      
+      case "loot":
+        DataBag.title = "Loot";
+        DataBag.key = "loot"
+        DataBag.value = "value"
+        DataBag.keyPretty = "Loot";
+        DataBag.valuePretty = "Value";
+      break;
+      
+      case " ":
+      break;
+    }
+    $("#"+$(this).attr("aria-describedby")).append(`<form data-character="${$(this).attr('data-character')}" id="${db}-bag"><div class="row"><div class="col">
+    <input type="text" id="${db}-name" class="form-control order-1" placeholder="${DataBag.keyPretty}" name="${DataBag.key}">
+        <div> 
+          <input type="text" id="${db}-dmg" class="form-control order-1" placeholder="${DataBag.valuePretty}" name="${DataBag.value}"> 
+        </div>
+        <div class="col">
+          <button type="sumbit" class="btn btn-sm btn-primary">Add</button>
+        </div>
+      </div>
+    </div></form>`);
+    $("#"+$(this).attr("aria-describedby")).children(".popover-body").html("");
+    $("#"+$(this).attr("aria-describedby")).children(".popover-header").html(`<div class="row"><div class="col">${DataBag.title}</div><div class="text-right col"><a href="#" data-toggle="popover" data-trigger="hover" class="badge badge-pill badge-danger pointer" data-html="true" data-bagclose="true" data-content="Cancel">x</a></div></div>`);
+
+    $(this).unbind();
+    $(`#${db}-bag`).submit( function (a) {
+      a.preventDefault();
+
+      character = $(this).attr('data-character');
+      bag = a.target.id.split("-")[0];
+// JEFF   
+      var newChar = new Object();
+      newChar = characters[character];
+      try {
+        newChar[bag].push($(`#${bag}-bag`).serializeObject());
+      }
+      catch (e)
+      {
+        newChar[bag] = [];
+      }
+      console.log($(`#${bag}-bag`).serializeObject());
+      console.log(newChar[bag]);
+      console.log(newChar);
+      $('.popover').fadeOut().remove();
+      common_updateChar(newChar, function() { setView("#characters") });
+    });
+    $("[data-bagclose]").click(function (a) { 
+        $('.popover').fadeOut().remove();
+        //$('.popover').remove();
+        setView("#characters");
+    });
+
+    console.log($(this).attr('data-character') + "->" +$(this).attr('data-bag'));
+  });
+  $("#badge").popover();
   $('[data-toggle="confirmation"]').confirmation(
   {
     onConfirm: function(a) { 
@@ -399,10 +527,10 @@ function common_charView()
   });
 }
 
-function common_writeChar()
+function common_updateChar(c, callback)
 {
   
-  var character = $("#character-form").serializeObject();
+  var character = c;
   if (character.name != "" && characters )
   {
     characters[character.name] = character;
@@ -414,6 +542,33 @@ function common_writeChar()
     characters[character.name] = character;
     localStorage.setItem("characters",JSON.stringify(characters));
   }
+  callback();
+}
+
+function common_writeChar()
+{
+  
+  var character = $("#character-form").serializeObject();
+  if (character.name != "" && characters )
+  {
+    characters[character.name] = character;
+    characters[character.name]["weapon"] = [];
+    localStorage.setItem("characters",JSON.stringify(characters));
+  }
+  else if (character.name != "")
+  {
+    characters = new Object();
+    characters[character.name] = character;
+    localStorage.setItem("characters",JSON.stringify(characters));
+  }
+}
+
+function refresh_char(a)
+{
+    a.preventDefault();
+    common_writeChar()
+   // setView_char(function() { common_charView();  $("#main-container").show();});
+   setView("#characters");
 }
 
 function common_charFunc()
@@ -422,13 +577,10 @@ function common_charFunc()
   $('[data-toggle="collapse"]').collapse();
 
   $("#character-form").submit(function (a) {
-    a.preventDefault();
-    common_writeChar();
+    refresh_char(a);
   });    
   $("#player-create").click(function (a){
-    a.preventDefault();
-    common_writeChar()
-    setView_char(function() { common_charView();  $("#main-container").show();});
+    refresh_char(a);
   });
   loadClasses();
 }
@@ -436,7 +588,6 @@ function common_charFunc()
 
 function setView_editChar(a)
 {
-  console.log(a);
   var c = characters[a.attr("data-character")];
   setView_addChar(function() {
 
@@ -458,6 +609,7 @@ function setView_editChar(a)
 function setView(clicked)
 { 
   $("#main-container").hide();
+  $('.popover').fadeOut().remove();
   
   switch (clicked)
   {
@@ -471,6 +623,7 @@ function setView(clicked)
     case "#characters":
     setView_char(function() {
       common_charView();
+      common_charFunc();
       $("#main-container").show();
     });
     break;
