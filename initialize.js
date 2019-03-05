@@ -94,7 +94,7 @@ function character_card (b)
   
   <img src="armor.png" class="cardicon m-1" data-bag="armor" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Armor" data-content="${bag_render(b.armor)}  <br /> Click to add armor.">
   
-  <img src="tire.png" class="cardicon m-1" data-bag="vehicle" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Vehicle" data-content="${bag_render(b.vehicle)}  <br /> Click to add vehicles.">
+  <img src="tire.png" class="cardicon m-1" data-bag="vehicle" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Vehicles" data-content="${bag_render(b.vehicle)}  <br /> Click to add vehicles.">
   
   <img src="pouch.png" class="cardicon m-1" data-bag="loot" data-character="${b.name}" data-toggle="popover" data-trigger="hover" data-html="true" title="Loot and Spoils" data-content="${bag_render(b.loot)}  <br /> Click to add loot.">
   
@@ -503,6 +503,7 @@ function common_charView()
       catch (e)
       {
         newChar[bag] = [];
+        newChar[bag].push($(`#${bag}-bag`).serializeObject());
       }
       console.log($(`#${bag}-bag`).serializeObject());
       console.log(newChar[bag]);
@@ -568,7 +569,7 @@ function refresh_char(a)
     a.preventDefault();
     common_writeChar()
    // setView_char(function() { common_charView();  $("#main-container").show();});
-   setView("#characters");
+   
 }
 
 function common_charFunc()
@@ -581,6 +582,7 @@ function common_charFunc()
   });    
   $("#player-create").click(function (a){
     refresh_char(a);
+    setView("#characters");
   });
   loadClasses();
 }
