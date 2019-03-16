@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <title>Roller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="./roller.css">
     
     <script src="./roll.js"></script>  
   </head>
 
   <body onload="renderDice()">
-      <div class="table-top" style="width: 640px; margin:  auto;">
+      <div class="table-top" style="width: 90%; margin:  auto;">
         <div class="dice-set" style="float: left;">
       
           <div class="pct"></div>
@@ -31,7 +32,7 @@
           <div class="d4"  style="margin: auto;"></div>
           <div style="font-size: 10px; text-align: center; width=128">(d4)</div>          
         </div>
-        <div class="log" style="float: left; margin: auto; height="256px;">
+        <div class="log" style="float: left; margin: auto; height: 256px; width: 50%">
           <textarea id="dice-log" cols="36" rows="14"></textarea>
           <button onclick="logClear()">Clear</button>
         </div>
