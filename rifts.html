@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RIFTS® Campaign Manager</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./rifts.css">
@@ -35,9 +36,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           <li class="nav-item">
             <a class="nav-link" href="#characters">Characters</a>
           </li>
-<!--      <li class="nav-item">
-            <a class="nav-link" href="#addchar">Add</a>
-          </li> -->
 
           <li class="nav-item">
             <a class="nav-link" href="#gmlog">GM Log</a>
@@ -45,22 +43,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
           <li class="nav-item">
             <a class="nav-link" data-needs="characters" href="#combat">Combat</a>
           </li>          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
         </ul>
-        
         <button type="button" id="dice-button" class="btn btn-lg btn-primary">Dice</button>
         
       </div>
@@ -69,7 +52,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <div class="container" id="top-container">
       <div class="row" id="frame-container">
         <div class="container" id="main-container"></div>
-        <iframe id="dice-frame" class="shadow-lg" src="/roller/roll.html" width=700 height=300 style="">This isn't working right.</iframe>
+        <iframe id="dice-frame" class="shadow-lg" src="/roller/roll.html" width=60% height=300 style="max-width: 700px;">This isn't working right.</iframe>
       </div>
     </div>
     
