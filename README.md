@@ -1,6 +1,6 @@
 # rifts frontend manager
 ## Introduction
-A light JavaScript app that runs in the browser and usese only local storage.
+A light JavaScript app that runs in the browser and uses only local storage.
 
 ## Requirements
 [node.js](https://nodejs.org/en/) v10.15.0+
