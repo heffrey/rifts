@@ -61,6 +61,18 @@ class Widget {
     }
   }
   
+  // Replace the elements of an Object in a static HTML widget. Returns the populated HTML Widget.
+  // 
+  // For example:
+  // 
+  // Widget.html(
+  //    staticHTMLWidget,           // HTML markup  
+  //    characters[1],              // Character object (extension of WidgetObject)
+  //    "character",                
+  //    function () { console.log("Finished populating Widget"); }
+  //    )
+  //
+  
   html (staticHtml, object, objectName, callback)
   {
     let w = staticHtml;
