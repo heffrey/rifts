@@ -56,7 +56,7 @@ const characterForm = `<div class="container-fluid">
   a one-time bonus (see Attribute Bonus Chart) to all skill percentages,
   including O.C.C. Skills, O.C  C . Related Skills and even
   Secondary Skills.">?</a></label>
-  <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="iq">
+  <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" type="number" name="iq">
   </div>
   <div class="col">
   <label>M.E. <a href="#" data-toggle="popover" tabindex="-1" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Mental Endurance" data-html="true" data-content="Measures the amount of mental and
