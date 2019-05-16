@@ -14,7 +14,7 @@ body {
 
 }
 .footer {
-  position: absolute;
+  position: fixed;
   padding: 0 15px;
     padding-top: 0px;
     padding-right: 15px;
