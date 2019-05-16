@@ -129,28 +129,28 @@ const characterForm = `<div class="container-fluid">
   <div class="card-body">
   <div class="form-row mt-2">
   <div class="col">
-  <label>Atk/Melee<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Attacks per Melee" data-html="true" data-content="Number of attacks per 15 second melee round.">?</a></label>
+  <label>Atk/Melee<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Attacks per Melee" data-html="true" data-content="Number of attacks per 15 second melee round.">?</a></label>
   <input type="text" id="character-attacks" class="form-control form-control-sm" placeholder="2+" name="atk">
   </div>
   <div class="col">
-  <label>H.P.<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Hit Points" data-html="true" data-content="Having rolled up your eight attributes, you will recall that one of them is Physical Endurance (P.E.). The Physical Endurance score indicates your character's base (starting) amount of Hit Points. A P.E. of 8 means eight Hit Points, a P.E. of 14 means fourteen Hit Points. Then roll I D6 and add it to the Hit Point total. This is a first level character's starting Hit Points. Some rare O.C.C.s and R.C.C.s may offer additional Hit Points or S.D.C. as a bonus..">?</a></label>
+  <label>H.P.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Hit Points" data-html="true" data-content="Having rolled up your eight attributes, you will recall that one of them is Physical Endurance (P.E.). The Physical Endurance score indicates your character's base (starting) amount of Hit Points. A P.E. of 8 means eight Hit Points, a P.E. of 14 means fourteen Hit Points. Then roll I D6 and add it to the Hit Point total. This is a first level character's starting Hit Points. Some rare O.C.C.s and R.C.C.s may offer additional Hit Points or S.D.C. as a bonus..">?</a></label>
   <input type="text" id="character-hp" class="form-control form-control-sm" placeholder="" name="hp">
   </div>
   <div class="col">
-  <label>S.D.C.<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Physical S.D.C." data-html="true" data-content="Most humans and D-Bees get a certain amount of S.D.C. points to start. Each D.C.C. should indicate how many S.D.C. points a character gets. In the event that it does not, the character starts out w ith 2D6+12 S.D.C., plus any D.C.C. or R.C.C. bonuses. Many Physical skills provide additional S.D.C. All S.D.C. bonuses are accumulative, add them up to get the total S.D.C. of a given character.">?</a></label>
+  <label>S.D.C.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Physical S.D.C." data-html="true" data-content="Most humans and D-Bees get a certain amount of S.D.C. points to start. Each D.C.C. should indicate how many S.D.C. points a character gets. In the event that it does not, the character starts out w ith 2D6+12 S.D.C., plus any D.C.C. or R.C.C. bonuses. Many Physical skills provide additional S.D.C. All S.D.C. bonuses are accumulative, add them up to get the total S.D.C. of a given character.">?</a></label>
   <input type="text" id="character-sdc" class="form-control form-control-sm" placeholder="" name="sdc">
   </div>
   </div>
   <div class="form-row mt-2">
   <div class="col">
-  <label>P.P.E.<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Potential Psychic Energy" data-html="true" data-content="Every person has some amount of Potential Psychic Energy
+  <label>P.P.E.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Potential Psychic Energy" data-html="true" data-content="Every person has some amount of Potential Psychic Energy
   (P.P.E.). Most humans and D-Bees have very little (Base: 2D6), because
   they have unwittingly spent their P.P.E. on occupational skills,
   hobbies and other interests.">?</a></label>
   <input type="text" id="character-ppe" class="form-control form-control-sm" placeholder="" name="ppe">
   </div>
   <div class="col">
-  <label>I.S.P.<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Inner Strength Points" data-html="true" data-content="TODO">?</a></label>
+  <label>I.S.P.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Inner Strength Points" data-html="true" data-content="TODO">?</a></label>
   <input type="text" id="character-isp" class="form-control form-control-sm" placeholder="" name="isp">
   </div>
   </div>
@@ -169,19 +169,19 @@ const characterForm = `<div class="container-fluid">
   <div class="card-body">
   <div class="form-row mt-2">
   <div class="col">
-  <label>Level<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Level" data-html="true" data-content="Character Level">?</a></label>
+  <label>Level<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Level" data-html="true" data-content="Character Level">?</a></label>
   <input type="text" id="character-level" class="form-control form-control-sm" placeholder="1+" name="lvl">
   </div>
   <div class="col">
-  <label>Exp<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Experience" data-html="true" data-content="Character Experience">?</a></label>
+  <label>Exp<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Experience" data-html="true" data-content="Character Experience">?</a></label>
   <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="exp">
   </div>
   <div class="col">
-  <label>Credits<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Cerdits" data-html="true" data-content="The basic currency of RIFTS&reg.">?</a></label>
+  <label>Credits<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Cerdits" data-html="true" data-content="The basic currency of RIFTS&reg.">?</a></label>
   <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="credits">
   </div>
   <div class="col">
-  <label>Salary<a href="#" data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Salary" data-html="true" data-content="Credits accumulated based on job or occupation.">?</a></label>
+  <label>Salary<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Salary" data-html="true" data-content="Credits accumulated based on job or occupation.">?</a></label>
   <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="salary">
   
   <input type="hidden" name="weapon">
