@@ -122,10 +122,14 @@ class Character
   
   
   // TODO: Generic Prototypes for WidgetObjectType
-  doAction(action)
+  doAction(action, object, element)
   {
-    
-    
+    switch (action)
+    {
+      case "addWeapon":
+        element.parentNode.innerHTML = genericForm;
+        break;
+    }
   }
   
   
@@ -148,7 +152,7 @@ class Character
         return [
           "gainExp"
         ];
-        
+
       case "vehicle":
         return [
           "enterVehicle",

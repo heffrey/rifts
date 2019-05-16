@@ -1,7 +1,8 @@
-// A widget is a static html rendered using a javascript object. It may be followed by an input for options once selected.
-// The selected item will call event handlers and other actions. By default, it is invoked using a class extending WidgetObject
-// which ensures the presence of an options member. Resulting actions populate a reliedOn Object.
-
+// Widget.Insert(Target)
+// A widget is a static html rendered using a javascript object. It may follow by an input for those options once selected. The selected item will call event handlers and other actions. 
+// by default, it is invoked using a WidgetObject extended class, which ensures the presence of a options.
+// The icon that is clicked is referred to as an icon.
+// The resulting action populates a reliedOn Object, with precomputed data present.
 class Widget {
   
   constructor(argv)
@@ -137,10 +138,12 @@ class Widget {
         for (var i = 0; i < object.options.length; i++)
         {
 
-          this.widget += `<a class="widget-option btn btn-info m-1" data-${object.name}="${object.object.name}">${object.options[i]}</a>`;
+          this.widget += `<a class="widget-option btn btn-info m-1" data-action="${object.options[i]}" data-${object.name}="${object.object.id}">${object.options[i]}</a>`;
         }
       }        
-      object.target.innerHTML = this.widget;  
+      object.target.innerHTML = this.widget;
+      $(".widget-option").unbind("click");
+     
       if(object.callback)
         object.callback(object);
     });

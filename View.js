@@ -84,7 +84,7 @@ function common_writeChar()
   }
   else if (character.id != 0)
   {
-    throw "Attempted to write a null character.";
+    throw "Attempted to write a null Character object.";
   }
 }
 
@@ -99,7 +99,7 @@ function setView_char (callback)
 {
   $("#main-container").hide();
   var jumbotron = document.createElement("div");
-  jumbotron.className = "jumbotron h-100 bg-white";
+  jumbotron.className = "jumbotron h-90 bg-white";
   jumbotron.style = "margin-top: .5rem;";
   
   $(jumbotron).html(`<h1 class="display-4">Characters</h1>`);
@@ -111,6 +111,7 @@ function setView_char (callback)
   $(jumbotron).append(characterLineup);
   
   $.each(characters, function(a,character) {
+    if (character)
     $(characterLineup).append(character_card(character));
   });
   
@@ -132,15 +133,15 @@ $(function () {
 
 function setView_addChar(callback)
 {
-  var div = document.createElement("div");
-  div.className = "row";
-  div.className = "jumbotron h-100 bg-white";
-  div.style = "margin-top: .5rem;";
+  var jumbotron = document.createElement("div");
+  jumbotron.className = "row";
+  jumbotron.className = "jumbotron h-90 bg-white";
+  jumbotron.style = "margin-top: .5rem;";
   
-  $(div).html(`<h1 class="display-4">Character Sheet</h1>`);
+  $(jumbotron).html(`<h1 class="display-4">Character Sheet</h1>`);
   
-  $(div).append(characterForm);
-  $("#main-container").html(div);  
+  $(jumbotron).append(characterForm);
+  $("#main-container").html(jumbotron);  
   callback();
 }
 
@@ -163,7 +164,7 @@ function common_charView()
     "loot": "Loot", 
     "vehicle": "Vehicles", 
     "psi": "Psionics",
-  "armor": "Armor"};
+    "armor": "Armor"};
   
   document.badgeWidgets = new Widget({
     selectClass: "character-command",
@@ -185,12 +186,17 @@ function common_charView()
       return `<div class="alert alert-warning"><button class="close">x</button>${head}${body}</div>`
     },
     postWidget: function(a) { 
-      console.log("closeset");
       $(".close").click(
-        function(a){
-          console.log("closed");
-        }); 
-      }
+      function(a){
+        a.target.parentNode.parentNode.innerHTML="";
+      });
+      
+      
+      $(".widget-option").click(function () {
+        let character = new Character($(this).attr('data-character'), characters[$(this).attr('data-character')]);
+        character.doAction($(this).attr('data-action'),character, this);
+      });      
+    }
   });
   
   $('[data-toggle="confirmation"]').confirmation(
@@ -217,123 +223,122 @@ function common_updateChar(c, callback)
     localStorage.setItem("characters",JSON.stringify(characters));
   }
   callback();
-}
-
-
-
-function refresh_char(a)
-{
-  a.preventDefault();
-  common_writeChar()  
-}
-
-function common_charFunc()
-{
-  $('[data-toggle="popover"]').popover();
-  $('[data-toggle="collapse"]').collapse();
-  
-  $("#character-form").submit(function (a) {
-    refresh_char(a);
-  });    
-  $("#player-create").click(function (a){
-    refresh_char(a);
-    setView("#characters");
-  });
-  loadClasses();
-}
-
-function setView_combat(callback)
-{
-  $("#main-container").hide();
-  var jumbotron = document.createElement("div");
-  jumbotron.className = "jumbotron h-100 bg-white";
-  jumbotron.style = "margin-top: .5rem;";
-  
-  $(jumbotron).html(`<h1 class="display-4">Combat</h1>`);
-  
-  var row = document.createElement("div");
-  row.className = "row";
-  $(jumbotron).append(row);
-  
-  $.each(characters, function(a,b) {
-    $(row).append(character_card(b));
-  });
-  
-  $(jumbotron).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
-  
-  $("#main-container").html(jumbotron);
-  $("img.cardicon").css("cursor", "pointer");
-  callback();
-}
-
-function setView_editChar(a)
-{
-  var character = characters[a.attr("data-character")];
-  setView_addChar(function() {
-    
-    $("#main-container").hide();
-    common_charFunc();
-    $("h1").html(character.name);
-    $("#player-create").html("Update");
-    
-    //$("#character-name").attr("readonly",true)	;
-    
-    $.each(character, function(a,b){
-      $(`[name=${a}]`).val(b);
-    });
-    
-    $("#main-container").show();
-  });
-}	
-
-
-function setView(clicked)
-{ 
-  $("#main-container").hide();
-  $('.popover').fadeOut().remove();
-  
-  switch (clicked)
-  {
-    
-    case "#main":
-    setView_main(function (){
-      $("#main-container").show();
-    });
-    break;
-    
-    case "#characters":
-    setView_char(function() {
-      common_charView();
-      common_charFunc();
-      $("#main-container").show();
-    });
-    break;
-    
-    case "#addchar":
-    setView_addChar(function() { 
-      common_charFunc();
-      $("#main-container").show();
-    });
-    break;
-    
-    case "#editchar":
-    setView_editChar();
-    break;
-    
-    case "#delchar":
-    setView_addChar();
-    break;
-    
-    case "#combat":
-    setView_combat(function() { 
-      $("#main-container").show();
-    });
-    break;
   }
-}
-
-function setView_clicked (a)
-{
-  var clicked = a.currentTarget.hash;
-  setView(clicked);
-}
+  
+  
+  
+  function refresh_char(a)
+  {
+    a.preventDefault();
+    common_writeChar()  
+  }
+  
+  function common_charFunc()
+  {
+    $('[data-toggle="popover"]').popover();
+    $('[data-toggle="collapse"]').collapse();
+    
+    $("#character-form").submit(function (a) {
+      refresh_char(a);
+    });    
+    $("#player-create").click(function (a){
+      refresh_char(a);
+      setView("#characters");
+    });
+    loadClasses();
+  }
+  
+  function setView_combat(callback)
+  {
+    $("#main-container").hide();
+    var jumbotron = document.createElement("div");
+    jumbotron.className = "jumbotron h-90 bg-white";
+    jumbotron.style = "margin-top: .5rem;";
+    
+    $(jumbotron).html(`<h1 class="display-4">Combat</h1>`);
+    
+    var row = document.createElement("div");
+    row.className = "row";
+    $(jumbotron).append(row);
+    
+    $.each(characters, function(a,b) {
+      if (b)
+      $(row).append(`<div class="col">${b.name}</div>`);
+    });
+    
+    $(jumbotron).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
+    
+    $("#main-container").html(jumbotron);
+    $("img.cardicon").css("cursor", "pointer");
+    callback();
+  }
+  
+  function setView_editChar(a)
+  {
+    var character = characters[a.attr("data-character")];
+    setView_addChar(function() {
+      
+      $("#main-container").hide();
+      common_charFunc();
+      $("h1").html(character.name);
+      $("#player-create").html("Update");
+      
+      $.each(character, function(a,b){
+        $(`[name=${a}]`).val(b);
+      });
+      
+      $("#main-container").show();
+    });
+  }	
+  
+  
+  function setView(clicked)
+  { 
+    $("#main-container").hide();
+    $('.popover').fadeOut().remove();
+    
+    switch (clicked)
+    {
+      
+      case "#main":
+      setView_main(function (){
+        $("#main-container").show();
+      });
+      break;
+      
+      case "#characters":
+      setView_char(function() {
+        common_charView();
+        common_charFunc();
+        $("#main-container").show();
+      });
+      break;
+      
+      case "#addchar":
+      setView_addChar(function() { 
+        common_charFunc();
+        $("#main-container").show();
+      });
+      break;
+      
+      case "#editchar":
+      setView_editChar();
+      break;
+      
+      case "#delchar":
+      setView_addChar();
+      break;
+      
+      case "#combat":
+      setView_combat(function() { 
+        $("#main-container").show();
+      });
+      break;
+    }
+  }
+  
+  function setView_clicked (a)
+  {
+    var clicked = a.currentTarget.hash;
+    setView(clicked);
+  }  
