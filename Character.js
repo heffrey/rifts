@@ -86,7 +86,7 @@ class Character
   
   addExp(exp)
   {
-    this.exp += Number(exp);
+    this.exp = Number(this.exp) + Number(exp);
     return this.exp;
   }
   
@@ -200,7 +200,7 @@ class Character
         a.preventDefault();
         let c = new Character();
         let w = $('#gain-exp').serializeObject();
-        character.exp += w["experience"];
+        character.addExp(w["experience"]);
         c.updateChar(character);
         $(this).fadeOut();
       });
