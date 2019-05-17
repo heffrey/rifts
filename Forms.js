@@ -46,16 +46,17 @@ class Form
       else if (object[i]["opt"])
       {
         let name = object[i]["opt"];
+        let field = this.formatField(name);
         let index = object[i]["index"]
         let list = object[i]["list"];
-        let field = this.formatField(name);
+       
         this.html += `<label class="small">${name}</label>`;
         this.html += `<select class="custom-select" name="${field}">`;
         this.html += `<option selected>${name}</option>`;
         for (var c = 0; c < list.length; c++)
         {
-          if ( list[c])
-            this.html+=`<option value="${c+1}">${list[c][index]}</option>`;
+          if (list[c][index])
+            this.html+=`<option value="${c}">${list[c][index]}</option>`;
         }  
         this.html += `</select>`;
       }
