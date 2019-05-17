@@ -40,7 +40,7 @@ class Widget {
           w.widgetEntryPoint (
           {
             clickPoint: document.widgets[this.selectClass][i],
-            target: document.getElementById(`${object.name}-entry`),
+            target: document.getElementById(`${object.id}-entry`),
             object: object,
             name: this.relyOn,
             options: object.options(widgetType) || [],

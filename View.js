@@ -18,13 +18,22 @@ function loadClasses () {
   },'json');
 }
 
+function loadWeapons () {
+  $.get("weapons.json", function(data){
+    $("#character-class").typeahead({ source:data });
+  },'json');
+}
+
 $(function () {
   $("#dice-button").click(function () {$(`#dice-frame`).fadeToggle()})
 });
 
 
 $(function () {
-  $("a").click(function (a) { setView_clicked (a); $(".popover").remove();})
+  $("a").click(function (a) { 
+    setView_clicked (a); 
+    //$(".popover").remove();
+  })
 });
 
 function setView_main (callback)
@@ -65,6 +74,7 @@ function common_writeChar()
 {
   
   var character = $("#character-form").serializeObject();
+  characters = characters || [];
   while (characters[characterAutoIncrement])
   {
     characterAutoIncrement += 1;
@@ -74,13 +84,13 @@ function common_writeChar()
   if (characters)
   {
     characters[character.id] = character;
-    characters[character.id]["weapon"] = [];
-    characters[character.id]["armor"] = [];
-    characters[character.id]["vehicle"] = [];
-    characters[character.id]["loot"] = [];
-    characters[character.id]["magic"] = [];
-    characters[character.id]["psi"] = [];
-    localStorage.setItem("characters",JSON.stringify(characters));
+    characters[character.id]["weapon"] = characters[character.id]["weapon"] || [];
+    characters[character.id]["armor"] = characters[character.id]["armor"] || [];
+    characters[character.id]["vehicle"] = characters[character.id]["vehicle"] || [];
+    characters[character.id]["loot"] = characters[character.id]["loot"] || [];
+    characters[character.id]["magic"] = characters[character.id]["magic"] || [];
+    characters[character.id]["psi"] = characters[character.id]["psi"] || [];
+    localStorage.setItem("characters", JSON.stringify(characters));
   }
   else if (character.id != 0)
   {
@@ -90,9 +100,13 @@ function common_writeChar()
 
 function character_card (characterObject)
 {
-  var w = new Widget();
-  c = new Character(characterObject.id, characterObject)
-  return (w.html(characterCard,c ,"character"));
+  try {
+    var w = new Widget();
+    c = new Character(characterObject.id, characterObject)
+    return (w.html(characterCard,c ,"character"));
+  }
+    catch (e)
+    {}
 }
 
 function setView_char (callback)
@@ -164,7 +178,8 @@ function common_charView()
     "loot": "Loot", 
     "vehicle": "Vehicles", 
     "psi": "Psionics",
-    "armor": "Armor"};
+    "armor": "Armor"
+  };
   
   document.badgeWidgets = new Widget({
     selectClass: "character-command",
@@ -181,6 +196,9 @@ function common_charView()
         break;
         case "exp":
         body = `${object.nextLvlXp() - object.exp} points until level ${Number(object.lvl)+1}.`;
+        break;
+        case "weapon":
+        body = ``;
         break;
       }
       return `<div class="alert alert-warning"><button class="close">x</button>${head}${body}</div>`
@@ -223,122 +241,122 @@ function common_updateChar(c, callback)
     localStorage.setItem("characters",JSON.stringify(characters));
   }
   callback();
-  }
+}
+
+
+
+function refresh_char(a)
+{
+  a.preventDefault();
+  common_writeChar()  
+}
+
+function common_charFunc()
+{
+  $('[data-toggle="popover"]').popover();
+  $('[data-toggle="collapse"]').collapse();
   
+  $("#character-form").submit(function (a) {
+    refresh_char(a);
+  });    
+  $("#player-create").click(function (a){
+    refresh_char(a);
+    setView("#characters");
+  });
+  loadClasses();
+}
+
+function setView_combat(callback)
+{
+  $("#main-container").hide();
+  var jumbotron = document.createElement("div");
+  jumbotron.className = "jumbotron h-90 bg-white";
+  jumbotron.style = "margin-top: .5rem;";
   
+  $(jumbotron).html(`<h1 class="display-4">Combat</h1>`);
   
-  function refresh_char(a)
-  {
-    a.preventDefault();
-    common_writeChar()  
-  }
+  var row = document.createElement("div");
+  row.className = "row";
+  $(jumbotron).append(row);
   
-  function common_charFunc()
-  {
-    $('[data-toggle="popover"]').popover();
-    $('[data-toggle="collapse"]').collapse();
+  $.each(characters, function(a,b) {
+    if (b)
+    $(row).append(`<div class="col">${b.name}</div>`);
+  });
+  
+  $(jumbotron).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
+  
+  $("#main-container").html(jumbotron);
+  $("img.cardicon").css("cursor", "pointer");
+  callback();
+}
+
+function setView_editChar(a)
+{
+  var character = characters[a.attr("data-character")];
+  setView_addChar(function() {
     
-    $("#character-form").submit(function (a) {
-      refresh_char(a);
-    });    
-    $("#player-create").click(function (a){
-      refresh_char(a);
-      setView("#characters");
-    });
-    loadClasses();
-  }
-  
-  function setView_combat(callback)
-  {
     $("#main-container").hide();
-    var jumbotron = document.createElement("div");
-    jumbotron.className = "jumbotron h-90 bg-white";
-    jumbotron.style = "margin-top: .5rem;";
+    common_charFunc();
+    $("h1").html(character.name);
+    $("#player-create").html("Update");
     
-    $(jumbotron).html(`<h1 class="display-4">Combat</h1>`);
-    
-    var row = document.createElement("div");
-    row.className = "row";
-    $(jumbotron).append(row);
-    
-    $.each(characters, function(a,b) {
-      if (b)
-      $(row).append(`<div class="col">${b.name}</div>`);
+    $.each(character, function(a,b){
+      $(`[name=${a}]`).val(b);
     });
     
-    $(jumbotron).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
-    
-    $("#main-container").html(jumbotron);
-    $("img.cardicon").css("cursor", "pointer");
-    callback();
-  }
+    $("#main-container").show();
+  });
+}	
+
+
+function setView(clicked)
+{ 
+  $("#main-container").hide();
+  $('.popover').fadeOut().remove();
   
-  function setView_editChar(a)
+  switch (clicked)
   {
-    var character = characters[a.attr("data-character")];
-    setView_addChar(function() {
-      
-      $("#main-container").hide();
-      common_charFunc();
-      $("h1").html(character.name);
-      $("#player-create").html("Update");
-      
-      $.each(character, function(a,b){
-        $(`[name=${a}]`).val(b);
-      });
-      
+    
+    case "#main":
+    setView_main(function (){
       $("#main-container").show();
     });
-  }	
-  
-  
-  function setView(clicked)
-  { 
-    $("#main-container").hide();
-    $('.popover').fadeOut().remove();
+    break;
     
-    switch (clicked)
-    {
-      
-      case "#main":
-      setView_main(function (){
-        $("#main-container").show();
-      });
-      break;
-      
-      case "#characters":
-      setView_char(function() {
-        common_charView();
-        common_charFunc();
-        $("#main-container").show();
-      });
-      break;
-      
-      case "#addchar":
-      setView_addChar(function() { 
-        common_charFunc();
-        $("#main-container").show();
-      });
-      break;
-      
-      case "#editchar":
-      setView_editChar();
-      break;
-      
-      case "#delchar":
-      setView_addChar();
-      break;
-      
-      case "#combat":
-      setView_combat(function() { 
-        $("#main-container").show();
-      });
-      break;
-    }
+    case "#characters":
+    setView_char(function() {
+      common_charView();
+      common_charFunc();
+      $("#main-container").show();
+    });
+    break;
+    
+    case "#addchar":
+    setView_addChar(function() { 
+      common_charFunc();
+      $("#main-container").show();
+    });
+    break;
+    
+    case "#editchar":
+    setView_editChar();
+    break;
+    
+    case "#delchar":
+    setView_addChar();
+    break;
+    
+    case "#combat":
+    setView_combat(function() { 
+      $("#main-container").show();
+    });
+    break;
   }
-  
-  function setView_clicked (a)
-  {
-    var clicked = a.currentTarget.hash;
-    setView(clicked);
-  }  
+}
+
+function setView_clicked (a)
+{
+  var clicked = a.currentTarget.hash;
+  setView(clicked);
+}  

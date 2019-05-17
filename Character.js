@@ -1,23 +1,23 @@
 const expTables = 
-  { "grunt": 
-    [
-      { lvl: 1, max: 1950},
-      { lvl: 2, max: 3900},
-      { lvl: 3, max: 8800},
-      { lvl: 4, max: 17600},
-      { lvl: 5, max: 25600},
-      { lvl: 6, max: 35600},
-      { lvl: 7, max: 50600},
-      { lvl: 8, max: 70600},
-      { lvl: 9, max: 95600},
-      { lvl: 10, max: 125600},
-      { lvl: 11, max: 175600},
-      { lvl: 12, max: 225600},
-      { lvl: 13, max: 275600},
-      { lvl: 14, max: 325600},
-      { lvl: 15, max: 375600}
-    ]
-  };
+{ "grunt": 
+  [
+    { lvl: 1, max: 1950},
+    { lvl: 2, max: 3900},
+    { lvl: 3, max: 8800},
+    { lvl: 4, max: 17600},
+    { lvl: 5, max: 25600},
+    { lvl: 6, max: 35600},
+    { lvl: 7, max: 50600},
+    { lvl: 8, max: 70600},
+    { lvl: 9, max: 95600},
+    { lvl: 10, max: 125600},
+    { lvl: 11, max: 175600},
+    { lvl: 12, max: 225600},
+    { lvl: 13, max: 275600},
+    { lvl: 14, max: 325600},
+    { lvl: 15, max: 375600}
+  ]
+};
 
 var characters = [];
 var characterAutoIncrement = 0;
@@ -55,16 +55,16 @@ class Character
     
     this.maxppe = this.maxppe || this.ppe;
     this.maxisp = this.maxisp || this.isp;
-
+    
     this.credits = this.credits || 0;
     
-
+    
   }
   
   getExpType()
   {
-      this.exptype = "grunt";
-      return this.exptype;
+    this.exptype = "grunt";
+    return this.exptype;
   }
   
   nextLvlXp()
@@ -74,13 +74,13 @@ class Character
     while (expTables["grunt"][i].max < this.exp) 
     {
       i++;
-
+      
       if (expTables["grunt"][i].max >= this.exp)
-        break;
+      break;
     }
     if (this.lvl != expTables["grunt"][i].lvl)
-      this.lvl = expTables["grunt"][i].lvl;
-      
+    this.lvl = expTables["grunt"][i].lvl;
+    
     return expTables["grunt"][i].max + 1;
   }
   
@@ -105,7 +105,7 @@ class Character
     this.hp = Number(this.hp);
     this.maxhp = Number(this.maxhp)
     if (this.hp > this.maxhp)
-        this.maxhp = this.hp;
+    this.maxhp = this.hp;
     this.hppct = this.hp / this.maxhp;
     return this.hp / this.maxhp * 100;
   }
@@ -115,20 +115,116 @@ class Character
     this.sdc = Number(this.sdc);
     this.maxsdc = Number(this.maxsdc)
     if (this.sdc > this.maxsdc)
-        this.maxsdc = this.sdc;
+    this.maxsdc = this.sdc;
     this.sdcpct = this.sdc / this.maxsdc;
     return this.sdc / this.maxsdc * 100;
   }
   
+  updateChar(c, callback)
+  {
+    var character = c;
+    try 
+    {
+      characters[Number(character.id)] = character;
+      localStorage.setItem("characters",JSON.stringify(characters));
+    }
+    catch (e)
+    {
+      console.error(e)
+    }
+    if (callback)
+    callback();
+  }
+  
   
   // TODO: Generic Prototypes for WidgetObjectType
-  doAction(action, object, element)
+  doAction(action, character, element)
   {
     switch (action)
     {
       case "addWeapon":
-        element.parentNode.innerHTML = genericForm;
-        break;
+      let f0 = new Form("add-weapon");
+      element.parentNode.innerHTML = f0.quickForm(
+      [
+        {inputr: "Weapon"}, 
+        {inputr: "Range (yards)"}, 
+        {inputr: "Damage"}, 
+        {input: "Payload"}
+      ]);
+      $.get("weapons.json", function(data){
+        $("[name=weapon]").typeahead({ source:data });
+          },'json');
+      $('#add-weapon').submit(
+      function(a) { 
+        a.preventDefault();
+        var w = $('#add-weapon').serializeObject();
+        if (w["weapon"])
+        {       
+          let c = new Character();
+          character.weapon[character.weapon.length] = w;
+          c.updateChar(character);
+          $(this).fadeOut();
+        }
+      });
+      break;
+      
+      case "dropWeapon":
+      let f1 = new Form("drop-weapon");
+      element.parentNode.innerHTML = f1.quickForm(
+      [
+        {opt: "Drop", list: character.weapon, index: "weapon"}
+      ]);
+      $('#drop-weapon').submit(
+      function(a) { 
+        a.preventDefault();
+        let c = new Character();
+        let w = $('#drop-weapon').serializeObject();
+        delete character.weapon[w["drop"] - 1];
+        c.updateChar(character);
+        $(this).fadeOut();
+      });
+      break;
+      
+      case "viewWeapons":
+      
+      break;
+      
+      case "gainExp":
+      let f3 = new Form("gain-exp");
+      element.parentNode.innerHTML = f3.quickForm(
+      [
+        {number: "Experience"}
+      ]);
+      $('#gain-exp').submit(
+      function(a) { 
+        a.preventDefault();
+        let c = new Character();
+        let w = $('#gain-exp').serializeObject();
+        character.exp += w["experience"];
+        c.updateChar(character);
+        $(this).fadeOut();
+      });
+      break;
+      
+      
+      case "spendCredits":
+      let f4 = new Form("spend-credits")
+      element.parentNode.innerHTML = f4.quickForm(
+      [
+        {number: "Credits"}
+      ]);
+      $('#spend-credits').submit(
+      function(a) { 
+        a.preventDefault();
+        let c = new Character();
+        let w = $('#spend-credits').serializeObject();
+        character.credits += w["credits"];
+        c.updateChar(character);
+        $(this).fadeOut();
+      });
+      break;
+      default:
+      throw `Undefined action '${action}' in doAction of Character.js`;
     }
   }
   
@@ -139,43 +235,43 @@ class Character
     switch (type)
     {
       case "weapon":
-        return [
-          "addWeapon", 
-          "dropWeaopn",
-          "viewWeapons"];
-          
+      return [
+        "addWeapon", 
+        "dropWeapon",
+      "viewWeapons"];
+      
       case "armor":
-        return [
-          "equipArmor"];
-          
+      return [
+      "equipArmor","unequipArmor","editHp","editXdc","toggleMDC"];
+      
       case "exp":
-        return [
-          "gainExp"
-        ];
-
+      return [
+        "gainExp"
+      ];
+      
       case "vehicle":
-        return [
-          "enterVehicle",
-          "exitVehicle"
-        ];
-        
+      return [
+        "enterVehicle",
+        "exitVehicle"
+      ];
+      
       case "loot":
-        return ["gainLoot", "sellLoot"]
-        
+      return ["gainLoot", "sellLoot"]
+      
       case "psi":
-        return ["viewPsi"];
-        
+      return ["viewPsi"];
+      
       case "magic":
-        return ["viewMagic"];
-        
+      return ["viewMagic"];
+      
       case "credits":
-        return [
-          "spendCredits",
-          "gainCredits"
-          ];
+      return [
+        "spendCredits",
+        "gainCredits"
+      ];
       
-      }
-      
+    }
+    
     
   }
 }
