@@ -138,7 +138,7 @@ class Character
   
   
   // TODO: Generic Prototypes for WidgetObjectType
-  doAction(action, character, element)
+  doAction(action, character, element, callback)
   {
     switch (action)
     {
@@ -221,6 +221,7 @@ class Character
         character.credits += w["credits"];
         c.updateChar(character);
         $(this).fadeOut();
+        callback();
       });
       break;
       default:

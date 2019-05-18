@@ -133,7 +133,8 @@ function setView_char (callback)
   
   $("#main-container").html(jumbotron);
   $("img.cardicon").css("cursor", "pointer");
-  callback();
+  if (callback)
+    callback();
 }
 
 $(function () {
@@ -212,7 +213,7 @@ function common_charView()
       
       $(".widget-option").click(function () {
         let character = new Character($(this).attr('data-character'), characters[$(this).attr('data-character')]);
-        character.doAction($(this).attr('data-action'),character, this);
+        character.doAction($(this).attr('data-action'),character, this, setView_char);
       });      
     }
   });
