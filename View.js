@@ -254,7 +254,7 @@ function common_updateChar(c, callback)
 
 function refresh_char(a)
 {
-  a.preventDefault();
+ // a.preventDefault();
   common_writeChar()  
 }
 
