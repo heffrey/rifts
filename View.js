@@ -202,6 +202,9 @@ function common_charView()
         body = `Gain experience.`;
         break;
         case "weapon":
+        body = `View or edit player weaponry.`;
+        break;
+        case "armor":
         body = `View or edit player armory.`;
         break;
       }

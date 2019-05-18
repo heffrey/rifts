@@ -93,22 +93,38 @@ class Character
   onLevel()
   {
     $(`span.lvl[data-character=${this.id}]`).html(this.lvl);
+    alert(this.lvl);
+    return true;
   }
   
   addExp(exp)
   {
-    let nxt = this.nextLvlXp();
-    if ((Number(exp) + Number(this.exp)) > Number(nxt))
-    {
-      this.exp = Number(exp) + Number(this.exp);
-      this.nextLvlXp()
-      this.onLevel();
+    this.nextxp = this.nextLvlXp();
+    while ((Number(exp) + Number(this.exp)) > Number(this.nextxp))
+    { 
+      exp = Number(exp) + Number(this.exp) - Number(this.nextxp);
+      this.exp = this.nextxp;
+      this.nextxp = this.nextLvlXp();
+      if (this.onLevel())
+        $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
+        this.nextxp + " xp");
     } 
     
-    this.exp = Number(this.exp) + Number(exp);
+    if ((Number(exp) + Number(this.exp)) > Number(this.nextxp))
+    {
+      if (this.exp = Number(this.exp) + Number(exp))
+          if (this.onLevel())
+            $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
+              this.nextxp + " xp");
+    } 
+    else
+      if (this.exp = Number(this.exp) + Number(exp))
+        $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
+          this.nextxp + " xp");
+
+    
     // todo logic to level
     this.updateChar(this);
-    $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + this.nextxp + " exp");
     return this.exp;
   }
   
