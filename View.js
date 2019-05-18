@@ -254,7 +254,7 @@ function common_updateChar(c, callback)
 
 function refresh_char(a)
 {
-  a.preventDefault();
+ // a.preventDefault();
   common_writeChar()  
 }
 
@@ -319,8 +319,8 @@ function setView_editChar(a)
 
 function setView(clicked)
 { 
-  $("#main-container").hide();
-  $('.popover').fadeOut().remove();
+  // $("#main-container").hide();
+  // $('.popover').fadeOut().remove();
   
   switch (clicked)
   {
