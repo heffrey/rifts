@@ -319,7 +319,7 @@ function setView_editChar(a)
 
 function setView(clicked)
 { 
-  $("#main-container").hide();
+  // $("#main-container").hide();
   // $('.popover').fadeOut().remove();
   
   switch (clicked)
