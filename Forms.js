@@ -2,8 +2,6 @@ class Form
 {
   constructor(argv)
   {
-    this.name = argv;
-    this.html = `<form id="${argv}" class="form">`;
   }
   
   formatField(name)
@@ -19,71 +17,76 @@ class Form
   
   footer(object)
   {
-    this.html +=  `<button type="submit" class="btn btn-primary m-1">&#10003</button></form>`;
+    
   }
   
-  quickForm(object)
+  quickForm(argv, object)
   {
+    let html = `<form id="${argv}" class="form">`;
+    
     for (var i = 0; i< object.length; i++)
     {
       if (object[i]["input"])
       {
         let name = object[i]["input"];
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label><input type="text" class="form-control form-control-sm order-1" placeholder="${name}" name="${field}">`;
+        html += `<label class="small">${name}</label><input type="text" class="form-control form-control-sm order-1" placeholder="${name}" name="${field}">`;
       } else if (object[i]["inputr"])
       {
         let name = object[i]["inputr"];
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label><input type="text" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
+        html += `<label class="small">${name}</label><input type="text" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
       }
       else if (object[i]["number"])
       {
         let name = object[i]["number"];
+        let max = object[i]["max"] || 100;
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label><input type="text" type="number" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
+        html += `<label class="small">${name}</label><input type="text" type="number" min="0" max="${max}" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
       }
       else if (object[i]["opt"])
       {
         let name = object[i]["opt"];
-        let index = object[i]["index"]
+        let index = object[i]["index"];
         let list = object[i]["list"];
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label>`;
-        this.html += `<select class="custom-select form-control-sm" name="${field}">`;
-        this.html += `<option selected>${name}</option>`;
+        html += `<label class="small">${name}</label>`;
+        html += `<select class="custom-select form-control-sm" name="${field}">`;
+        html += `<option selected>${name}</option>`;
         for (var c = 0; c < list.length; c++)
         {
           if (list[c])
             if(list[c][index])
-              this.html+=`<option value="${c+1}">${list[c][index]}</option>`;
+              html+=`<option value="${c+1}">${list[c][index]}</option>`;
         }  
-        this.html += `</select>`;
+        html += `</select>`;
       }
       else if (object[i]["list"])
       {
         let index = object[i]["index"];
         let index2 = object[i]["index2"]
         let list = object[i]["list"];
-        this.html+=`<div class="container">`;
+        html+=`<div class="container">`;
         for (var c = 0; c < list.length; c++)
         {
-          this.html+=`<div class="row">`;
+          html+=`<div class="row">`;
           if (list[c])
-              this.html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,10)}.</div><div class="col">${list[c][index2]}</div>`;
+              html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,10)}.</div><div class="col">${list[c][index2]}</div>`;
                 //else
-              //this.html+=`<div value="${c+1}">${list[c][index]}</div>`;
-          this.html+=`</div>`;
+              //html+=`<div value="${c+1}">${list[c][index]}</div>`;
+          html+=`</div>`;
         }  
-        this.html += `</div>`;
+        html += `</div>`;
       }
       
       else {
         console.warn();
       }
     }
-    this.footer(object);
-    return this.html;
+    
+    html +=  `<button type="submit" class="btn btn-primary m-1">&#10003</button></form>`;
+    
+    return html;
   }
 }
 
@@ -98,14 +101,19 @@ const characterForm = `<div class="container-fluid">
 <div class="container bg-white rounded" id="character">
 <form id="character-form">  <div id="character-accordion">  <div class="card">  <div class="card-header" id="character-overview">  <h5 class="mb-0">  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-overview" aria-expanded="true" aria-controls="collapse-overview">
 Character Overview  </button>  </h5>  </div>  <div id="collapse-overview" class="collapse show" aria-labelledby="character-overview" data-parent="#character-accordion">  <div class="card-body"> <div class="form-row">
-<div class="col-3">  <label>Name</label><input type="text" id="character-name" class="form-control order-1" placeholder="Name" name="name"></div><div class="col">  <label>True Name</label>  <input type="text" class="form-control order-1" id="character-truename" placeholder="True Name" name="truename">  </div>  <div class="col-2">  <label>Sex</label>  <input type="text" class="form-control order-1" placeholder="Sex" name="sex">
-</div>  <div class="col-2">  <label>Age</label>  <input type="text" class="form-control order-1" placeholder="Age" name="age">  </div>  </div>    <div class="form-row mt-2">    <div class="col">  <label>Occupation</label>  <input type="text" class="form-control" placeholder="Occupation" name="occupation">  </div>  <div class="col-5">  <label>O.C.C. / R.C.C.</label>  <input type="text" id="character-class" class="form-control" placeholder="Character Class" name="occrcc" autocomplete="off">
+<div class="col-4">  <label>Name</label><input type="text" id="character-name" class="form-control order-1" placeholder="Name" name="name"></div><div class="col">  <label>True Name</label>  <input type="text" class="form-control order-1" id="character-truename" placeholder="True Name" name="truename">  </div></div>    
+
+<div class="form-row mt-2">   <div class="col-.">  <label>Sex</label>  <input type="text" class="form-control order-1" placeholder="Sex" name="sex">
+</div>  
+<div class="col-3">  <label>Age</label>  <input type="text" class="form-control order-1" placeholder="Age" name="age">  </div>  <div class="col">  <label>Occupation</label>  <input type="text" class="form-control" placeholder="Occupation" name="occupation">  </div>  </div>    
+
+<div class="form-row mt-2">    <div class="col-5">  <label>O.C.C. / R.C.C.</label>  <input type="text" id="character-class" class="form-control" placeholder="Character Class" name="occrcc" autocomplete="off">
 </div>
-<div class="col-2">
+<div class="col">
 <label>Height</label>
 <input type="text" class="form-control" placeholder="Height" name="height">
 </div>                
-<div class="col-2">
+<div class="col">
 <label>Weight</label>
 <input type="text" class="form-control" placeholder="Weight" name="weight">
 </div>    
@@ -166,6 +174,8 @@ explains how your friendly neighborhood ice cream man and some
 knife-wielding thug might both have the same high M.A., but use it differently.">?</a></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ma">
 </div>
+</div>
+<div class="form-row mt-2">
 <div class="col">
 <label>P.S. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Strength" data-html="true" data-content="This is the raw physical power of a character.
 Any character with a P.S. of 16 or better receives a bonus to damage
@@ -189,6 +199,8 @@ death, disease, poisons/toxins, and magic. But not Demonic Curses or
 possession, they are different and separate.">?</a></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pe">
 </div>
+</div>
+<div class="form-row mt-2">
 <div class="col">
 <label>P.B. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Beauty" data-html="true" data-content="An indication of the physical attractiveness
 of the character. A P.B. of 16 or better is rewarded with a bonus to
@@ -240,7 +252,7 @@ hobbies and other interests.">?</a></label>
 <input type="text" id="character-ppe" class="form-control form-control-sm" placeholder="" name="ppe">
 </div>
 <div class="col">
-<label>I.S.P.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Inner Strength Points" data-html="true" data-content="TODO">?</a></label>
+<label>I.S.P.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Inner Strength Points" data-html="true" data-content="Base Inner Strength Points (I.S.P.) are the character's M.E. +4D6, + lD6+1 per level of experience.">?</a></label>
 <input type="text" id="character-isp" class="form-control form-control-sm" placeholder="" name="isp">
 </div>
 </div>
