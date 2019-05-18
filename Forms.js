@@ -102,9 +102,9 @@ const characterForm = `<div class="container-fluid">
 Character Overview  </button>  </h5>  </div>  <div id="collapse-overview" class="collapse show" aria-labelledby="character-overview" data-parent="#character-accordion">  <div class="card-body"> <div class="form-row">
 <div class="col-4">  <label>Name</label><input type="text" id="character-name" class="form-control order-1" placeholder="Name" name="name"></div><div class="col">  <label>True Name</label>  <input type="text" class="form-control order-1" id="character-truename" placeholder="True Name" name="truename">  </div></div>    
 
-<div class="form-row mt-2">   <div class="col">  <label>Sex</label>  <input type="text" class="form-control order-1" placeholder="Sex" name="sex">
+<div class="form-row mt-2">   <div class="col-3">  <label>Sex</label>  <input type="text" class="form-control order-1" placeholder="Sex" name="sex">
 </div>  
-<div class="col">  <label>Age</label>  <input type="text" class="form-control order-1" placeholder="Age" name="age">  </div>  <div class="col">  <label>Occupation</label>  <input type="text" class="form-control" placeholder="Occupation" name="occupation">  </div>  </div>    
+<div class="col-3">  <label>Age</label>  <input type="text" class="form-control order-1" placeholder="Age" name="age">  </div>  <div class="col">  <label>Occupation</label>  <input type="text" class="form-control" placeholder="Occupation" name="occupation">  </div>  </div>    
 
 <div class="form-row mt-2">    <div class="col-5">  <label>O.C.C. / R.C.C.</label>  <input type="text" id="character-class" class="form-control" placeholder="Character Class" name="occrcc" autocomplete="off">
 </div>
@@ -126,8 +126,8 @@ Character Overview  </button>  </h5>  </div>  <div id="collapse-overview" class=
 <label>Origin</label>
 <input type="text" class="form-control" placeholder="Family Origin" name="familyOrigin">
 </div>                  
-<div class="col-3">
-<label>Alignment <span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</span></label>
+<div class="col-4">
+<label>Alignment <span data-toggle="popover" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</span></label>
 <select class="custom-select" name="alignment">
 <option selected>Alignment</option>
 <option value="1">Principled</option>
