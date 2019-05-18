@@ -179,7 +179,7 @@ class Character
         a.preventDefault();
         let c = new Character();
         let w = $('#drop-weapon').serializeObject();
-        delete character.weapon[w["drop"]];
+        delete character.weapon[w["drop"] - 1];
         c.updateChar(character);
         $(this).fadeOut();
       });
