@@ -184,21 +184,18 @@ class Character
     const f = new Form();
     const c = new Character();
     
-    var parent = element.parentNode;
-    parent.innerHTML = `<div class="alert alert-info"><button class="close">x</button><h5>${action}</h5></div>`;
-    
     gmLog = gmLog || []; 
     
     switch (action)
     {
       case "addWeapon":
-      $(parent).append(f.quickForm( "add-weapon-" + character.id,
+      element.parentNode.innerHTML = f.quickForm( "add-weapon-" + character.id,
       [
         {inputr: "Weapon"}, 
         {inputr: "Range (yards)"}, 
         {inputr: "Damage"}, 
         {input: "Payload"}
-      ]));
+      ]);
       $.get("weapons.json", function(data){
         $("[name=weapon]").typeahead({ source:data });
       },'json');
@@ -217,7 +214,7 @@ class Character
       
       
       case "dropWeapon":
-      element.parentNode.innerHTML += f.quickForm("drop-weapon-" + character.id,
+      element.parentNode.innerHTML = f.quickForm("drop-weapon-" + character.id,
       [
         {opt: "Drop", list: character.weapon, index: "weapon"}
       ]);
@@ -233,37 +230,41 @@ class Character
       
       
       case "equipArmor":
-        element.parentNode.innerHTML += f.quickForm("equip-armor-" + character.id,
-          [
-           {inputr: "Armor"}, 
-           {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
-           {number: "Amount"}
-          ]);
+      element.parentNode.innerHTML = f.quickForm("equip-armor-" + character.id,
+      [
+        {inputr: "Armor"}, 
+        {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
+        {number: "Amount"}
+      ]);
       //TODO    
-          
+      
       break; 
       
       
       case "unequipArmor":
-        element.parentNode.innerHTML += f.quickForm("unequip-armor-" + character.id,
-          [
-          {opt: "Drop", list: character.armor, index: "armor"}
-          ]);
-          
- 
+      element.parentNode.innerHTML = f.quickForm("unequip-armor-" + character.id,
+      [
+        {opt: "Drop", list: character.armor, index: "armor"}
+      ]);
+      //TODO    
+
+      
       break; 
       
       
       case "editXdc":
-        element.parentNode.innerHTML += f.quickForm("edit-xdc-" + character.id,
-          [
-           {number: "Maximum"}, 
-           {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"}
-          ]);
-
-
+      element.parentNode.innerHTML = f.quickForm("edit-xdc-" + character.id,
+      [
+        {number: "Maximum"}, 
+        {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"}
+      ]);
+      //TODO    
+    
+      break;
+      
+      
       case "viewWeapons":
-      element.parentNode.innerHTML += f.quickForm("view-weapon-" + character.id, [{
+      element.parentNode.innerHTML = f.quickForm("view-weapon-" + character.id, [{
         list: character.weapon, 
         index: "weapon",
         index2: "damage"
@@ -274,7 +275,7 @@ class Character
       
       
       case "gainExp":
-      element.parentNode.innerHTML += f.quickForm( "gain-exp-" + character.id, 
+      element.parentNode.innerHTML = f.quickForm( "gain-exp-" + character.id, 
       [
         {number: "Experience"}
       ]);
@@ -293,7 +294,7 @@ class Character
       
       case "spendCredits":
       case "gainCredits":
-      element.parentNode.innerHTML += f.quickForm("spend-credits-" + character.id
+      element.parentNode.innerHTML = f.quickForm("spend-credits-" + character.id
       [
         {number: "Credits"}
       ]);
