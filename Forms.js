@@ -30,18 +30,18 @@ class Form
       {
         let name = object[i]["input"];
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label><input type="text" class="form-control order-1" placeholder="${name}" name="${field}">`;
+        this.html += `<label class="small">${name}</label><input type="text" class="form-control form-control-sm order-1" placeholder="${name}" name="${field}">`;
       } else if (object[i]["inputr"])
       {
         let name = object[i]["inputr"];
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label><input type="text" class="form-control required order-1" placeholder="${name}" name="${field}">`;
+        this.html += `<label class="small">${name}</label><input type="text" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
       }
       else if (object[i]["number"])
       {
         let name = object[i]["number"];
         let field = this.formatField(name);
-        this.html += `<label class="small">${name}</label><input type="text" type="number" class="form-control required order-1" placeholder="${name}" name="${field}">`;
+        this.html += `<label class="small">${name}</label><input type="text" type="number" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
       }
       else if (object[i]["opt"])
       {
@@ -50,7 +50,7 @@ class Form
         let list = object[i]["list"];
         let field = this.formatField(name);
         this.html += `<label class="small">${name}</label>`;
-        this.html += `<select class="custom-select" name="${field}">`;
+        this.html += `<select class="custom-select form-control-sm" name="${field}">`;
         this.html += `<option selected>${name}</option>`;
         for (var c = 0; c < list.length; c++)
         {
