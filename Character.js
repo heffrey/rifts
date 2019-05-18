@@ -180,27 +180,34 @@ class Character
   // TODO: Generic Prototypes for WidgetObjectType
   doAction(action, character, element, callback)
   {
+    
+    const f = new Form();
+    const c = new Character();
+    
+    var parent = element.parentNode;
+    parent.innerHTML = `<div class="alert alert-info"><button class="close">x</button><h5>${action}</h5></div>`;
+    
+    gmLog = gmLog || []; 
+    
     switch (action)
     {
       case "addWeapon":
-      let f0 = new Form("add-weapon" + character.id);
-      element.parentNode.innerHTML = f0.quickForm(
+      $(parent).append(f.quickForm( "add-weapon-" + character.id,
       [
         {inputr: "Weapon"}, 
         {inputr: "Range (yards)"}, 
         {inputr: "Damage"}, 
         {input: "Payload"}
-      ]);
+      ]));
       $.get("weapons.json", function(data){
         $("[name=weapon]").typeahead({ source:data });
       },'json');
-      $('#add-weapon'  + character.id).submit(
+      $('#add-weapon-' + character.id).submit(
       function(a) { 
         a.preventDefault();
-        var w = $('#add-weapon'  + character.id).serializeObject();
+        var w = $('#add-weapon-' + character.id).serializeObject();
         if (w["weapon"])
         {       
-          let c = new Character();
           character.weapon[character.weapon.length] = w;
           c.updateChar(character);
           $(this).fadeOut();
@@ -208,26 +215,55 @@ class Character
       });
       break;
       
+      
       case "dropWeapon":
-      let f1 = new Form("drop-weapon" + character.id);
-      element.parentNode.innerHTML = f1.quickForm(
+      element.parentNode.innerHTML += f.quickForm("drop-weapon-" + character.id,
       [
         {opt: "Drop", list: character.weapon, index: "weapon"}
       ]);
-      $('#drop-weapon' + character.id).submit(
+      $('#drop-weapon-' + character.id).submit(
       function(a) { 
         a.preventDefault();
-        let c = new Character();
-        let w = $('#drop-weapon' + character.id).serializeObject();
+        let w = $('#drop-weapon-' + character.id).serializeObject();
         delete character.weapon[w["drop"] - 1];
         c.updateChar(character);
         $(this).fadeOut();
       });
       break;
       
+      
+      case "equipArmor":
+        element.parentNode.innerHTML += f.quickForm("equip-armor-" + character.id,
+          [
+           {inputr: "Armor"}, 
+           {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
+           {number: "Amount"}
+          ]);
+      //TODO    
+          
+      break; 
+      
+      
+      case "unequipArmor":
+        element.parentNode.innerHTML += f.quickForm("unequip-armor-" + character.id,
+          [
+          {opt: "Drop", list: character.armor, index: "armor"}
+          ]);
+          
+ 
+      break; 
+      
+      
+      case "editXdc":
+        element.parentNode.innerHTML += f.quickForm("edit-xdc-" + character.id,
+          [
+           {number: "Maximum"}, 
+           {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"}
+          ]);
+
+
       case "viewWeapons":
-      let f2 = new Form("view-weapon" + character.id);
-      element.parentNode.innerHTML = f2.quickForm([{
+      element.parentNode.innerHTML += f.quickForm("view-weapon-" + character.id, [{
         list: character.weapon, 
         index: "weapon",
         index2: "damage"
@@ -236,17 +272,16 @@ class Character
       
       break;
       
+      
       case "gainExp":
-      let f3 = new Form("gain-exp" + character.id);
-      element.parentNode.innerHTML = f3.quickForm(
+      element.parentNode.innerHTML += f.quickForm( "gain-exp-" + character.id, 
       [
         {number: "Experience"}
       ]);
-      $('#gain-exp' + character.id).submit(
+      $('#gain-exp-' + character.id).submit(
       function(a) { 
         a.preventDefault();
-        let c = new Character();
-        let w = $('#gain-exp' + character.id).serializeObject();
+        let w = $('#gain-exp-' + character.id).serializeObject();
         character.addExp(w["experience"]);
         c.updateChar(character);
         
@@ -258,16 +293,14 @@ class Character
       
       case "spendCredits":
       case "gainCredits":
-      let f4 = new Form("spend-credits" + character.id)
-      element.parentNode.innerHTML = f4.quickForm(
+      element.parentNode.innerHTML += f.quickForm("spend-credits-" + character.id
       [
         {number: "Credits"}
       ]);
-      $('#spend-credits' + character.id).submit(
+      $('#spend-credits-' + character.id).submit(
       function(a) { 
         a.preventDefault();
-        let c = new Character();
-        let w = $('#spend-credits' + character.id).serializeObject();
+        let w = $('#spend-credits-' + character.id).serializeObject();
         if (action == "gainCredits")
         character.credits =  Number(character.credits) + Number(w["credits"]);
         else
@@ -297,7 +330,7 @@ class Character
       
       case "armor":
       return [
-      "equipArmor","unequipArmor","editHp","editXdc","toggleMDC"];
+      "equipArmor","unequipArmor","editHp","editXdc"];
       
       case "exp":
       return [
