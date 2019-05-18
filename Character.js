@@ -97,6 +97,8 @@ class Character
     return true;
   }
   
+  
+  
   addExp(exp)
   {
     this.nextxp = this.nextLvlXp();
@@ -106,22 +108,22 @@ class Character
       this.exp = this.nextxp;
       this.nextxp = this.nextLvlXp();
       if (this.onLevel())
-        $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
-        this.nextxp + " xp");
+      $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
+      this.nextxp + " xp");
     } 
     
     if ((Number(exp) + Number(this.exp)) > Number(this.nextxp))
     {
       if (this.exp = Number(this.exp) + Number(exp))
-          if (this.onLevel())
-            $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
-              this.nextxp + " xp");
+      if (this.onLevel())
+      $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
+      this.nextxp + " xp");
     } 
     else
-      if (this.exp = Number(this.exp) + Number(exp))
-        $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
-          this.nextxp + " xp");
-
+    if (this.exp = Number(this.exp) + Number(exp))
+    $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + 
+    this.nextxp + " xp");
+    
     
     // todo logic to level
     this.updateChar(this);
@@ -171,9 +173,9 @@ class Character
       console.error(e)
     }
     if (callback)
-      callback();
+    callback();
   }
- 
+  
   
   // TODO: Generic Prototypes for WidgetObjectType
   doAction(action, character, element, callback)
@@ -181,7 +183,7 @@ class Character
     switch (action)
     {
       case "addWeapon":
-      let f0 = new Form("add-weapon");
+      let f0 = new Form("add-weapon" + character.id);
       element.parentNode.innerHTML = f0.quickForm(
       [
         {inputr: "Weapon"}, 
@@ -191,11 +193,11 @@ class Character
       ]);
       $.get("weapons.json", function(data){
         $("[name=weapon]").typeahead({ source:data });
-          },'json');
-      $('#add-weapon').submit(
+      },'json');
+      $('#add-weapon'  + character.id).submit(
       function(a) { 
         a.preventDefault();
-        var w = $('#add-weapon').serializeObject();
+        var w = $('#add-weapon'  + character.id).serializeObject();
         if (w["weapon"])
         {       
           let c = new Character();
@@ -207,16 +209,16 @@ class Character
       break;
       
       case "dropWeapon":
-      let f1 = new Form("drop-weapon");
+      let f1 = new Form("drop-weapon" + character.id);
       element.parentNode.innerHTML = f1.quickForm(
       [
         {opt: "Drop", list: character.weapon, index: "weapon"}
       ]);
-      $('#drop-weapon').submit(
+      $('#drop-weapon' + character.id).submit(
       function(a) { 
         a.preventDefault();
         let c = new Character();
-        let w = $('#drop-weapon').serializeObject();
+        let w = $('#drop-weapon' + character.id).serializeObject();
         delete character.weapon[w["drop"] - 1];
         c.updateChar(character);
         $(this).fadeOut();
@@ -224,24 +226,31 @@ class Character
       break;
       
       case "viewWeapons":
+      let f2 = new Form("view-weapon" + character.id);
+      element.parentNode.innerHTML = f2.quickForm([{
+        list: character.weapon, 
+        index: "weapon",
+        index2: "damage"
+      }
+      ]);
       
       break;
       
       case "gainExp":
-      let f3 = new Form("gain-exp");
+      let f3 = new Form("gain-exp" + character.id);
       element.parentNode.innerHTML = f3.quickForm(
       [
         {number: "Experience"}
       ]);
-      $('#gain-exp').submit(
+      $('#gain-exp' + character.id).submit(
       function(a) { 
         a.preventDefault();
         let c = new Character();
-        let w = $('#gain-exp').serializeObject();
+        let w = $('#gain-exp' + character.id).serializeObject();
         character.addExp(w["experience"]);
         c.updateChar(character);
-
-
+        
+        
         $(this).fadeOut();
       });
       break;
@@ -249,20 +258,20 @@ class Character
       
       case "spendCredits":
       case "gainCredits":
-      let f4 = new Form("spend-credits")
+      let f4 = new Form("spend-credits" + character.id)
       element.parentNode.innerHTML = f4.quickForm(
       [
         {number: "Credits"}
       ]);
-      $('#spend-credits').submit(
+      $('#spend-credits' + character.id).submit(
       function(a) { 
         a.preventDefault();
         let c = new Character();
-        let w = $('#spend-credits').serializeObject();
+        let w = $('#spend-credits' + character.id).serializeObject();
         if (action == "gainCredits")
-          character.credits =  Number(character.credits) + Number(w["credits"]);
+        character.credits =  Number(character.credits) + Number(w["credits"]);
         else
-          character.credits =  Number(character.credits) - Number(w["credits"]);
+        character.credits =  Number(character.credits) - Number(w["credits"]);
         c.updateChar(character);
         $(`span.credits[data-character=${character.id}]`).html(character.credits + " credits");
         $(this).fadeOut();

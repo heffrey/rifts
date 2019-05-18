@@ -54,11 +54,30 @@ class Form
         this.html += `<option selected>${name}</option>`;
         for (var c = 0; c < list.length; c++)
         {
-          if (list[c][index])
-            this.html+=`<option value="${c+1}">${list[c][index]}</option>`;
+          if (list[c])
+            if(list[c][index])
+              this.html+=`<option value="${c+1}">${list[c][index]}</option>`;
         }  
         this.html += `</select>`;
       }
+      else if (object[i]["list"])
+      {
+        let index = object[i]["index"];
+        let index2 = object[i]["index2"]
+        let list = object[i]["list"];
+        this.html+=`<div class="container">`;
+        for (var c = 0; c < list.length; c++)
+        {
+          this.html+=`<div class="row">`;
+          if (list[c])
+              this.html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,10)}.</div><div class="col">${list[c][index2]}</div>`;
+                //else
+              //this.html+=`<div value="${c+1}">${list[c][index]}</div>`;
+          this.html+=`</div>`;
+        }  
+        this.html += `</div>`;
+      }
+      
       else {
         console.warn();
       }
