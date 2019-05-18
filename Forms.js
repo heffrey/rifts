@@ -54,7 +54,7 @@ class Form
         this.html += `<option selected>${name}</option>`;
         for (var c = 0; c < list.length; c++)
         {
-          if ( list[c])
+          if (list[c][index])
             this.html+=`<option value="${c+1}">${list[c][index]}</option>`;
         }  
         this.html += `</select>`;
