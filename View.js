@@ -189,20 +189,23 @@ function common_charView()
     structuredAs: function(a, b){ return new Character (a,b)},
     widget: function (callingWidget, object, optionSelected) { 
       let head = `<h5>${optionCategories[optionSelected]}</h5>`;
+      let c = new Character(object.id, object);
       let body = ``;
       switch (optionSelected)
       {
+        // data here is static. Not recommended to add dynamic data here.
+        // such as objects that are frequently updated.
         case "credits":
-        body = `{character.credits} available. Spend or gain credits.`;
+        body = `Spend or gain credits.`;
         break;
         case "exp":
-        body = `${object.nextLvlXp() - object.exp} points until level ${Number(object.lvl)+1}.`;
+        body = `Gain experience.`;
         break;
         case "weapon":
-        body = ``;
+        body = `View or edit player armory.`;
         break;
       }
-      return `<div class="alert alert-warning"><button class="close">x</button>${head}${body}</div>`
+      return `<div class="alert alert-info"><button class="close">x</button>${head}${body}</div>`
     },
     postWidget: function(a) { 
       $(".close").click(

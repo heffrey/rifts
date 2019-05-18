@@ -84,9 +84,31 @@ class Character
     return expTables["grunt"][i].max + 1;
   }
   
+  addCredits(credits)
+  {
+    this.credits = Number(this.credits) + Number(credits);
+    return this.credits;
+  }
+  
+  onLevel()
+  {
+    $(`span.lvl[data-character=${this.id}]`).html(this.lvl);
+  }
+  
   addExp(exp)
   {
+    let nxt = this.nextLvlXp();
+    if ((Number(exp) + Number(this.exp)) > Number(nxt))
+    {
+      this.exp = Number(exp) + Number(this.exp);
+      this.nextLvlXp()
+      this.onLevel();
+    } 
+    
     this.exp = Number(this.exp) + Number(exp);
+    // todo logic to level
+    this.updateChar(this);
+    $(`span.exp[data-character=${this.id}]`).html(this.exp + "/" + this.nextxp + " exp");
     return this.exp;
   }
   
@@ -133,9 +155,9 @@ class Character
       console.error(e)
     }
     if (callback)
-    callback();
+      callback();
   }
-  
+ 
   
   // TODO: Generic Prototypes for WidgetObjectType
   doAction(action, character, element, callback)
@@ -202,12 +224,15 @@ class Character
         let w = $('#gain-exp').serializeObject();
         character.addExp(w["experience"]);
         c.updateChar(character);
+
+
         $(this).fadeOut();
       });
       break;
       
       
       case "spendCredits":
+      case "gainCredits":
       let f4 = new Form("spend-credits")
       element.parentNode.innerHTML = f4.quickForm(
       [
@@ -218,12 +243,16 @@ class Character
         a.preventDefault();
         let c = new Character();
         let w = $('#spend-credits').serializeObject();
-        character.credits += w["credits"];
+        if (action == "gainCredits")
+          character.credits =  Number(character.credits) + Number(w["credits"]);
+        else
+          character.credits =  Number(character.credits) - Number(w["credits"]);
         c.updateChar(character);
+        $(`span.credits[data-character=${character.id}]`).html(character.credits + " credits");
         $(this).fadeOut();
-        callback();
       });
       break;
+      
       default:
       throw `Undefined action '${action}' in doAction of Character.js`;
     }
