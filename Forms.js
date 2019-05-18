@@ -72,8 +72,7 @@ class Form
           html+=`<div class="row">`;
           if (list[c])
               html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,10)}.</div><div class="col">${list[c][index2]}</div>`;
-                //else
-              //html+=`<div value="${c+1}">${list[c][index]}</div>`;
+
           html+=`</div>`;
         }  
         html += `</div>`;
@@ -120,7 +119,7 @@ Character Overview  </button>  </h5>  </div>  <div id="collapse-overview" class=
 </div>
 <div class="form-row mt-2">
 <div class="col">
-<label>Native Language(s) <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Languages" data-html="true" data-content="<b>American</b>: English, the universal language of the American continents <br><b>Techno-can</b>: Basic but modified American/English; a universal computer/techno language used in high-tech computer communications and systems. Not used as an everyday spoken language but as a specialized tech-language developed for technical journals and as a universal computer language <br><b>Spanish</b>: the second major tongue of the Americas <br> <b>Japanese <br> Chinese <br> Euro</b>: A blend of Russian, German, and Polish <br><b>Dragonese</b>: Elven from the Palladium world <br><b>Gobblely</b>: Goblin, hob-goblin, orc, and ogre from the Palladium world <br><b>Faerie Speak</b>: Faerie folk as found in the Palladium world">?</a></label>
+<label>Native Language(s) <span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Languages" data-html="true" data-content="<b>American</b>: English, the universal language of the American continents <br><b>Techno-can</b>: Basic but modified American/English; a universal computer/techno language used in high-tech computer communications and systems. Not used as an everyday spoken language but as a specialized tech-language developed for technical journals and as a universal computer language <br><b>Spanish</b>: the second major tongue of the Americas <br> <b>Japanese <br> Chinese <br> Euro</b>: A blend of Russian, German, and Polish <br><b>Dragonese</b>: Elven from the Palladium world <br><b>Gobblely</b>: Goblin, hob-goblin, orc, and ogre from the Palladium world <br><b>Faerie Speak</b>: Faerie folk as found in the Palladium world">?</span></label>
 <input type="text" class="form-control" placeholder="Languages" name="languages">
 </div>
 <div class="col">
@@ -128,7 +127,7 @@ Character Overview  </button>  </h5>  </div>  <div id="collapse-overview" class=
 <input type="text" class="form-control" placeholder="Family Origin" name="familyOrigin">
 </div>                  
 <div class="col-3">
-<label>Alignment <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</a></label>
+<label>Alignment <span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Alignments" data-html="true" data-content="<b>Good:</b> Principled and Scrupulous <br> <b>Selfish:</b> Unprincipled and Anarchist <br> <b>Evil:</b> Miscreant, Aberrant and Diabolic">?</span></label>
 <select class="custom-select" name="alignment">
 <option selected>Alignment</option>
 <option value="1">Principled</option>
@@ -143,7 +142,7 @@ Character Overview  </button>  </h5>  </div>  <div id="collapse-overview" class=
 </div>
 <div class="form-row mt-2">
 <div class="col">
-<label>I.Q. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Intelligence Quotient" data-html="true" data-content="Indicates the character's intelligence.
+<label>I.Q. <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Intelligence Quotient" data-html="true" data-content="Indicates the character's intelligence.
 The exact I.Q. is equal to the I.Q. attribute multiplied times ten. Characters
 with an I.Q. of 1 -6 are morons and should be played like the
 classic dumb lug. However, having a low I.Q. does not necessarily
@@ -153,17 +152,17 @@ above average. An I.Q. o f 17 o r better i s exceptional, the higher the
 number the more brilliant the character. An I.Q. of 16 or higher receives
 a one-time bonus (see Attribute Bonus Chart) to all skill percentages,
 including O.C.C. Skills, O.C  C . Related Skills and even
-Secondary Skills.">?</a></label>
+Secondary Skills.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" type="number" name="iq">
 </div>
 <div class="col">
-<label>M.E. <a href="#" data-toggle="popover" tabindex="-1" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Mental Endurance" data-html="true" data-content="Measures the amount of mental and
+<label>M.E. <span data-toggle="popover" tabindex="-1" data-trigger="hover" class="badge character-command badge-pill badge-primary pointer" title="Mental Endurance" data-html="true" data-content="Measures the amount of mental and
 emotional stress the character can withstand. M.E. 1 6 or better provides
-a bonus to save vs psionic attacks and insanity.">?</a></label>
+a bonus to save vs psionic attacks and insanity.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="me">
 </div>
 <div class="col">
-<label>M.A. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Mental Affinity" data-html="true" data-content="Represents the character' s I ikeability, personal
+<label>M.A. <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Mental Affinity" data-html="true" data-content="Represents the character' s I ikeability, personal
 charm and charisma. Natural leaders, with an M.A. of 16 or
 higher, have a bonus to invoke trust or intimidation in others. A person
 with a high M.A. may appear trustworthy to some, but intimidating to
@@ -171,47 +170,47 @@ others. This may depend on the character himself or the circumstances
 of the situation. At the player' s option, a character with a high M.A.
 may choose to be only especially trustworthy or only intimidating. This
 explains how your friendly neighborhood ice cream man and some
-knife-wielding thug might both have the same high M.A., but use it differently.">?</a></label>
+knife-wielding thug might both have the same high M.A., but use it differently.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ma">
 </div>
 </div>
 <div class="form-row mt-2">
 <div class="col">
-<label>P.S. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Strength" data-html="true" data-content="This is the raw physical power of a character.
+<label>P.S. <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Strength" data-html="true" data-content="This is the raw physical power of a character.
 Any character with a P.S. of 16 or better receives a bonus to damage
 an opponent in hand to hand combat. This bonus is applied to
 punch and kick attacks, as well as handheld weapons such as a club,
-knife or sword. It does not apply to the bow and arrow or guns.">?</a></label>
+knife or sword. It does not apply to the bow and arrow or guns.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="ps">
 </div>
 <div class="col">
-<label>P.P. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Prowess" data-html="true" data-content="Shows the degree of dexterity and agility
+<label>P.P. <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Prowess" data-html="true" data-content="Shows the degree of dexterity and agility
 of the character. A P.P. of 16 or higher is rewarded with bonuses to
-strike, parry and dodge.">?</a></label>
+strike, parry and dodge.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pp">
 </div>
 <div class="col">
-<label>P.E. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Endurance" data-html="true" data-content="Demonstrates the character's stamina
+<label>P.E. <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Endurance" data-html="true" data-content="Demonstrates the character's stamina
 and durability. The amount of physical punishment and resistance to fatigue,
 disease, and poison (and magic too) are determined by P.E. Characters
 with a P.E. of 1 6 or higher receive a bonus to save vs coma!
 death, disease, poisons/toxins, and magic. But not Demonic Curses or
-possession, they are different and separate.">?</a></label>
+possession, they are different and separate.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pe">
 </div>
 </div>
 <div class="form-row mt-2">
 <div class="col">
-<label>P.B. <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Beauty" data-html="true" data-content="An indication of the physical attractiveness
+<label>P.B. <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Physical Beauty" data-html="true" data-content="An indication of the physical attractiveness
 of the character. A P.B. of 16 or better is rewarded with a bonus to
-charm or impress.">?</a></label>
+charm or impress.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="pb">
 </div>
 <div class="col">
-<label>Spd <a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Speed" data-html="true" data-content="This is how fast the character can run. The character's
+<label>Spd <span data-toggle="popover" data-trigger="hover" tabindex="-1"  class="badge character-command badge-pill badge-primary pointer" title="Speed" data-html="true" data-content="This is how fast the character can run. The character's
 Speed x20 is the number of yards or meters he can run in one minute.
 Speed x5 is the number of yards/meters covered in a melee round (15
-seconds). Dividing the distance covered in a melee round by the character's number of attacks indicates how far he can move on each attack.">?</a></label>
+seconds). Dividing the distance covered in a melee round by the character's number of attacks indicates how far he can move on each attack.">?</span></label>
 <input type="text" id="character-name" class="form-control form-control-sm" placeholder="3D6" name="spd">
 </div>
 </div>
@@ -231,28 +230,28 @@ Combat Details
 <div class="card-body">
 <div class="form-row mt-2">
 <div class="col">
-<label>Atk/Melee<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Attacks per Melee" data-html="true" data-content="Number of attacks per 15 second melee round.">?</a></label>
+<label>Atk/Melee<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Attacks per Melee" data-html="true" data-content="Number of attacks per 15 second melee round.">?</span></label>
 <input type="text" id="character-attacks" class="form-control form-control-sm" placeholder="2+" name="atk">
 </div>
 <div class="col">
-<label>H.P.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Hit Points" data-html="true" data-content="Having rolled up your eight attributes, you will recall that one of them is Physical Endurance (P.E.). The Physical Endurance score indicates your character's base (starting) amount of Hit Points. A P.E. of 8 means eight Hit Points, a P.E. of 14 means fourteen Hit Points. Then roll I D6 and add it to the Hit Point total. This is a first level character's starting Hit Points. Some rare O.C.C.s and R.C.C.s may offer additional Hit Points or S.D.C. as a bonus..">?</a></label>
+<label>H.P.<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Hit Points" data-html="true" data-content="Having rolled up your eight attributes, you will recall that one of them is Physical Endurance (P.E.). The Physical Endurance score indicates your character's base (starting) amount of Hit Points. A P.E. of 8 means eight Hit Points, a P.E. of 14 means fourteen Hit Points. Then roll I D6 and add it to the Hit Point total. This is a first level character's starting Hit Points. Some rare O.C.C.s and R.C.C.s may offer additional Hit Points or S.D.C. as a bonus..">?</span></label>
 <input type="text" id="character-hp" class="form-control form-control-sm" placeholder="" name="hp">
 </div>
 <div class="col">
-<label>S.D.C.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Physical S.D.C." data-html="true" data-content="Most humans and D-Bees get a certain amount of S.D.C. points to start. Each D.C.C. should indicate how many S.D.C. points a character gets. In the event that it does not, the character starts out w ith 2D6+12 S.D.C., plus any D.C.C. or R.C.C. bonuses. Many Physical skills provide additional S.D.C. All S.D.C. bonuses are accumulative, add them up to get the total S.D.C. of a given character.">?</a></label>
+<label>S.D.C.<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Physical S.D.C." data-html="true" data-content="Most humans and D-Bees get a certain amount of S.D.C. points to start. Each D.C.C. should indicate how many S.D.C. points a character gets. In the event that it does not, the character starts out w ith 2D6+12 S.D.C., plus any D.C.C. or R.C.C. bonuses. Many Physical skills provide additional S.D.C. All S.D.C. bonuses are accumulative, add them up to get the total S.D.C. of a given character.">?</span></label>
 <input type="text" id="character-sdc" class="form-control form-control-sm" placeholder="" name="sdc">
 </div>
 </div>
 <div class="form-row mt-2">
 <div class="col">
-<label>P.P.E.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Potential Psychic Energy" data-html="true" data-content="Every person has some amount of Potential Psychic Energy
+<label>P.P.E.<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Potential Psychic Energy" data-html="true" data-content="Every person has some amount of Potential Psychic Energy
 (P.P.E.). Most humans and D-Bees have very little (Base: 2D6), because
 they have unwittingly spent their P.P.E. on occupational skills,
-hobbies and other interests.">?</a></label>
+hobbies and other interests.">?</span></label>
 <input type="text" id="character-ppe" class="form-control form-control-sm" placeholder="" name="ppe">
 </div>
 <div class="col">
-<label>I.S.P.<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Inner Strength Points" data-html="true" data-content="Base Inner Strength Points (I.S.P.) are the character's M.E. +4D6, + lD6+1 per level of experience.">?</a></label>
+<label>I.S.P.<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Inner Strength Points" data-html="true" data-content="Base Inner Strength Points (I.S.P.) are the character's M.E. +4D6, + lD6+1 per level of experience.">?</span></label>
 <input type="text" id="character-isp" class="form-control form-control-sm" placeholder="" name="isp">
 </div>
 </div>
@@ -271,19 +270,19 @@ Character Progress
 <div class="card-body">
 <div class="form-row mt-2">
 <div class="col">
-<label>Level<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Level" data-html="true" data-content="Character Level">?</a></label>
+<label>Level<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Level" data-html="true" data-content="Character Level">?</span></label>
 <input type="text" id="character-level" class="form-control form-control-sm" placeholder="1+" name="lvl">
 </div>
 <div class="col">
-<label>Exp<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Experience" data-html="true" data-content="Character Experience">?</a></label>
+<label>Exp<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Experience" data-html="true" data-content="Character Experience">?</span></label>
 <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="exp">
 </div>
 <div class="col">
-<label>Credits<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Cerdits" data-html="true" data-content="The basic currency of RIFTS&reg.">?</a></label>
+<label>Credits<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Cerdits" data-html="true" data-content="The basic currency of RIFTS&reg.">?</span></label>
 <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="credits">
 </div>
 <div class="col">
-<label>Salary<a href="#" data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Salary" data-html="true" data-content="Credits accumulated based on job or occupation.">?</a></label>
+<label>Salary<span data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Salary" data-html="true" data-content="Credits accumulated based on job or occupation.">?</span></label>
 <input type="text" id="character-level" class="form-control form-control-sm" placeholder="" name="salary">
 
 <input type="hidden" name="weapon">

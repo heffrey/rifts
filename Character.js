@@ -199,6 +199,7 @@ class Character
       $.get("weapons.json", function(data){
         $("[name=weapon]").typeahead({ source:data });
       },'json');
+      
       $('#add-weapon-' + character.id).submit(
       function(a) { 
         a.preventDefault();
@@ -244,7 +245,7 @@ class Character
       case "unequipArmor":
       element.parentNode.innerHTML = f.quickForm("unequip-armor-" + character.id,
       [
-        {opt: "Drop", list: character.armor, index: "armor"}
+        {opt: "Unequip", list: character.armor, index: "armor"}
       ]);
       //TODO    
 
@@ -345,7 +346,7 @@ class Character
       ];
       
       case "loot":
-      return ["gainLoot", "sellLoot"]
+      return ["gainLoot", "sellLoot","sellLoot"]
       
       case "psi":
       return ["viewPsi"];

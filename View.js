@@ -202,6 +202,11 @@ function common_charView()
         break;
         case "armor":
         body = `View or edit player armory.`;
+        case "vehicle":
+        body = `Enter or exit existing vehicle.`;
+        break;
+        case "loot":
+        body = `Gain, buy or sell loot.`;
         break;
       }
       return `<div class="alert alert-info"><button class="close">x</button>${head}${body}</div>`
@@ -360,6 +365,7 @@ function setView(clicked)
 
 function setView_clicked (a)
 {
+  a.preventDefault();
   var clicked = a.currentTarget.hash;
   setView(clicked);
 }  
