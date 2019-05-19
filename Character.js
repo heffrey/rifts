@@ -93,6 +93,7 @@ class Character
   onLevel()
   {
     $(`span.lvl[data-character=${this.id}]`).html(this.lvl);
+
     alert(this.lvl);
     return true;
   }
@@ -102,7 +103,7 @@ class Character
   addExp(exp)
   {
     this.nextxp = this.nextLvlXp();
-    while ((Number(exp) + Number(this.exp)) > Number(this.nextxp))
+    while ((Number(exp) + Number(this.exp)) >= Number(this.nextxp))
     { 
       exp = Number(exp) + Number(this.exp) - Number(this.nextxp);
       this.exp = this.nextxp;
@@ -112,7 +113,7 @@ class Character
       this.nextxp + " xp");
     } 
     
-    if ((Number(exp) + Number(this.exp)) > Number(this.nextxp))
+    if ((Number(exp) + Number(this.exp)) >= Number(this.nextxp))
     {
       if (this.exp = Number(this.exp) + Number(exp))
       if (this.onLevel())
@@ -192,9 +193,9 @@ class Character
       element.parentNode.innerHTML = f.quickForm( "add-weapon-" + character.id,
       [
         {inputr: "Weapon"}, 
-        {inputr: "Range (yards)"}, 
+        {number: "Range (yards)"}, 
         {inputr: "Damage"}, 
-        {input: "Payload"}
+        {number: "Payload"}
       ]);
       $.get("weapons.json", function(data){
         $("[name=weapon]").typeahead({ source:data });
@@ -252,12 +253,22 @@ class Character
       
       break; 
       
+      case "editHp":
+      element.parentNode.innerHTML = f.quickForm("edit-hp-" + character.id,
+      [
+        {number: "Maximum", min: 1}, 
+        {number: "Current"}
+      ]);
+      //TODO    
+    
+      break;
       
       case "editXdc":
       element.parentNode.innerHTML = f.quickForm("edit-xdc-" + character.id,
       [
         {number: "Maximum"}, 
-        {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"}
+        {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
+        {number: "Current"}
       ]);
       //TODO    
     
@@ -286,23 +297,40 @@ class Character
         let w = $('#gain-exp-' + character.id).serializeObject();
         character.addExp(w["experience"]);
         c.updateChar(character);
-        
-        
         $(this).fadeOut();
       });
       break;
       
       
       case "spendCredits":
-      case "gainCredits":
-      element.parentNode.innerHTML = f.quickForm("spend-credits-" + character.id
+      element.parentNode.innerHTML = f.quickForm("spend-credits-" + character.id,
       [
-        {number: "Credits"}
+        {number: "Credits", max: character.credits }
       ]);
       $('#spend-credits-' + character.id).submit(
       function(a) { 
         a.preventDefault();
         let w = $('#spend-credits-' + character.id).serializeObject();
+        if (action == "gainCredits")
+        character.credits =  Number(character.credits) + Number(w["credits"]);
+        else
+        character.credits =  Number(character.credits) - Number(w["credits"]);
+        c.updateChar(character);
+        $(`span.credits[data-character=${character.id}]`).html(character.credits + " credits");
+        $(this).fadeOut();
+      });
+      break;
+      
+      
+      case "gainCredits":
+      element.parentNode.innerHTML = f.quickForm("gain-credits-" + character.id,
+      [
+        {number: "Credits"}
+      ]);
+      $('#gain-credits-' + character.id).submit(
+      function(a) { 
+        a.preventDefault();
+        let w = $('#gain-credits-' + character.id).serializeObject();
         if (action == "gainCredits")
         character.credits =  Number(character.credits) + Number(w["credits"]);
         else
@@ -346,7 +374,7 @@ class Character
       ];
       
       case "loot":
-      return ["gainLoot", "sellLoot","sellLoot"]
+      return ["gainLoot", "buyLoot","sellLoot"]
       
       case "psi":
       return ["viewPsi"];
@@ -360,6 +388,8 @@ class Character
         "gainCredits"
       ];
       
+      case "character": 
+      return ["skills"];
     }
     
     

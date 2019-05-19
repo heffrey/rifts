@@ -102,12 +102,11 @@ function character_card (characterObject)
     return (w.html(characterCard,c ,"character"));
   }
     catch (e)
-    {}
+    { console.error ("Error in character_card"); }
 }
 
 function setView_char (callback)
 {
-  $("#main-container").hide();
   var jumbotron = document.createElement("div");
   jumbotron.className = "jumbotron h-90 bg-white";
   jumbotron.style = "margin-top: .5rem;";
@@ -175,7 +174,8 @@ function common_charView()
     "loot": "Loot", 
     "vehicle": "Vehicles", 
     "psi": "Psionics",
-    "armor": "Armor"
+    "armor": "Armor",
+    "character": "Character"
   };
   
   document.badgeWidgets = new Widget({
@@ -192,21 +192,31 @@ function common_charView()
         // data here is static. Not recommended to add dynamic data here.
         // such as objects that are frequently updated.
         case "credits":
-        body = `Spend or gain credits.`;
+        body = `Spend or gain credits`;
         break;
+        
         case "exp":
-        body = `Gain experience.`;
+        body = `Gain experience`;
         break;
+        
         case "weapon":
-        body = `View or edit player weaponry.`;
+        body = `View or edit player weaponry`;
         break;
+        
         case "armor":
-        body = `View or edit player armory.`;
-        case "vehicle":
-        body = `Enter or exit existing vehicle.`;
+        body = `View or edit player armory`;
         break;
+        
+        case "vehicle":
+        body = `Enter or exit existing vehicle`;
+        break;
+        
+        case "character":
+        body = `Skills and standings`;
+        break;
+        
         case "loot":
-        body = `Gain, buy or sell loot.`;
+        body = `Gain, buy or sell loot`;
         break;
       }
       return `<div class="alert alert-info"><button class="close">x</button>${head}${body}</div>`
@@ -276,7 +286,6 @@ function common_charFunc()
 
 function setView_combat(callback)
 {
-  $("#main-container").hide();
   var jumbotron = document.createElement("div");
   jumbotron.className = "jumbotron h-90 bg-white";
   jumbotron.style = "margin-top: .5rem;";
@@ -291,9 +300,7 @@ function setView_combat(callback)
     if (b)
     $(row).append(`<div class="col">${b.name}</div>`);
   });
-  
-  $(jumbotron).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
-  
+    
   $("#main-container").html(jumbotron);
   $("img.cardicon").css("cursor", "pointer");
   callback();
@@ -304,7 +311,6 @@ function setView_editChar(a)
   var character = characters[a.attr("data-character")];
   setView_addChar(function() {
     
-    $("#main-container").hide();
     common_charFunc();
     $("h1").html(character.name);
     $("#player-create").html("Update");
@@ -313,7 +319,6 @@ function setView_editChar(a)
       $(`[name=${a}]`).val(b);
     });
     
-    $("#main-container").show();
   });
 }	
 
@@ -328,7 +333,6 @@ function setView(clicked)
     
     case "#main":
     setView_main(function (){
-      $("#main-container").show();
     });
     break;
     
@@ -336,14 +340,12 @@ function setView(clicked)
     setView_char(function() {
       common_charView();
       common_charFunc();
-      $("#main-container").show();
     });
     break;
     
     case "#addchar":
     setView_addChar(function() { 
       common_charFunc();
-      $("#main-container").show();
     });
     break;
     
@@ -357,15 +359,17 @@ function setView(clicked)
     
     case "#combat":
     setView_combat(function() { 
-      $("#main-container").show();
     });
+    break;
+    
+    case "vehicles":
     break;
   }
 }
 
 function setView_clicked (a)
 {
-  a.preventDefault();
+  //a.preventDefault();
   var clicked = a.currentTarget.hash;
   setView(clicked);
 }  
