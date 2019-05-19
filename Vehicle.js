@@ -1,7 +1,7 @@
 var vehicles = [];
 var vehicleAutoIncrement = 0;
 
-class Vehicle 
+class Vehicle extends WidgetObject
 {
   
   

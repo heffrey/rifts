@@ -1,3 +1,6 @@
+
+"use strict";
+
 const expTables = 
 { "grunt": 
   [
@@ -56,8 +59,13 @@ class Character
     this.maxppe = this.maxppe || this.ppe;
     this.maxisp = this.maxisp || this.isp;
     
-    this.credits = this.credits || 0;
+    this.credits = this.credits || 0;    
     
+    this.weapon = this.weapon || [];
+    this.wautoinc = this.wautoinc || 0;
+    
+    this.spell = this.spell || [];
+    this.sautoinc = this.sautoinc || 0;
     
   }
   
@@ -93,12 +101,11 @@ class Character
   onLevel()
   {
     $(`span.lvl[data-character=${this.id}]`).html(this.lvl);
-
-    alert(this.lvl);
+    const f = new Form();
+    f.quickAlert(`<strong>${this.name}</strong> has leveled to ${this.lvl}.`);
+    //alert(this.lvl);
     return true;
   }
-  
-  
   
   addExp(exp)
   {
@@ -197,6 +204,8 @@ class Character
         {inputr: "Damage"}, 
         {number: "Payload"}
       ]);
+
+      $(".form-control").attr('autocomplete','off');
       $.get("weapons.json", function(data){
         $("[name=weapon]").typeahead({ source:data });
       },'json');
@@ -206,8 +215,15 @@ class Character
         a.preventDefault();
         var w = $('#add-weapon-' + character.id).serializeObject();
         if (w["weapon"])
-        {       
-          character.weapon[character.weapon.length] = w;
+        { 
+          w.damage = w.damage.toUpperCase();
+          
+          while (character.weapon[character.wautoinc])
+          {
+            character.wautoinc++;
+          }
+          w.id =  w.id || character.wautoinc;
+          character.weapon[character.wautoinc] = w;
           c.updateChar(character);
           $(this).fadeOut();
         }
@@ -249,7 +265,7 @@ class Character
         {opt: "Unequip", list: character.armor, index: "armor"}
       ]);
       //TODO    
-
+      
       
       break; 
       
@@ -260,7 +276,7 @@ class Character
         {number: "Current"}
       ]);
       //TODO    
-    
+      
       break;
       
       case "editXdc":
@@ -271,7 +287,7 @@ class Character
         {number: "Current"}
       ]);
       //TODO    
-    
+      
       break;
       
       

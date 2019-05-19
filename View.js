@@ -80,12 +80,12 @@ function common_writeChar()
   if (characters)
   {
     characters[character.id] = character;
-    characters[character.id]["weapon"] = characters[character.id]["weapon"] || [];
+/*     characters[character.id]["weapon"] = characters[character.id]["weapon"] || [];
     characters[character.id]["armor"] = characters[character.id]["armor"] || [];
     characters[character.id]["vehicle"] = characters[character.id]["vehicle"] || [];
     characters[character.id]["loot"] = characters[character.id]["loot"] || [];
     characters[character.id]["magic"] = characters[character.id]["magic"] || [];
-    characters[character.id]["psi"] = characters[character.id]["psi"] || [];
+    characters[character.id]["psi"] = characters[character.id]["psi"] || []; */
     localStorage.setItem("characters", JSON.stringify(characters));
   }
   else if (character.id != 0)
@@ -275,7 +275,9 @@ function common_charFunc()
   $('[data-toggle="collapse"]').collapse();
   
   $("#character-form").submit(function (a) {
-    refresh_char(a);
+    if (clicked != "#addchar")
+      refresh_char(a);
+    // setView("#characters");
   });    
   $("#player-create").click(function (a){
     refresh_char(a);
@@ -339,13 +341,13 @@ function setView(clicked)
     case "#characters":
     setView_char(function() {
       common_charView();
-      common_charFunc();
+      common_charFunc(clicked);
     });
     break;
     
     case "#addchar":
     setView_addChar(function() { 
-      common_charFunc();
+      common_charFunc(clicked);
     });
     break;
     
@@ -369,7 +371,7 @@ function setView(clicked)
 
 function setView_clicked (a)
 {
-  //a.preventDefault();
+  // a.preventDefault();
   var clicked = a.currentTarget.hash;
   setView(clicked);
 }  

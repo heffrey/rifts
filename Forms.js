@@ -1,3 +1,6 @@
+const alert = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+{widget.text} <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>`;
+
 class Form
 {
   constructor(argv)
@@ -18,6 +21,22 @@ class Form
   footer(object)
   {
     
+  }
+  
+  quickAlert(argv)
+  {
+    var w = new WidgetObject();
+    w.text= argv;
+    
+    const widget = new Widget();
+
+    $("#top-container").prepend(
+      widget.html(
+      alert,
+      w,
+      "widget",
+      function() {}
+     ));      
   }
   
   quickForm(argv, object)
@@ -73,7 +92,7 @@ class Form
         {
           html+=`<div class="row">`;
           if (list[c])
-              html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,10)}.</div><div class="col">${list[c][index2]}</div>`;
+              html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col">${list[c][index2]}</div>`;
 
           html+=`</div>`;
         }  
@@ -81,7 +100,7 @@ class Form
       }
       
       else {
-        console.warn();
+        console.warn("Invoked quickForm rendered no content.");
       }
     }
     
