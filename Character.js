@@ -50,19 +50,24 @@ class Character
     this.nextxp = this.nextLvlXp();
     
     this.hppct = this.hitpointPercentage();
-    this.sdcpct = this.sdcPercentage();
+    this.sdcmdcpct = this.sdcmdcPercentage();
     
     // populated values
     this.maxhp = this.maxhp || this.hp;
-    this.maxsdc = this.maxsdc || this.sdc;
+    this.maxsdcmdc = this.maxsdcmdc || this.sdcmdc;
     
     this.maxppe = this.maxppe || this.ppe;
     this.maxisp = this.maxisp || this.isp;
+    
+    this.dmgtype = this.dmgtype || "SDC";
     
     this.credits = this.credits || 0;    
     
     this.weapon = this.weapon || [];
     this.wautoinc = this.wautoinc || 0;
+    
+    this.armor = this.armor || [];
+    this.aautoinc = this.aautoinc || 0;
     
     this.spell = this.spell || [];
     this.sautoinc = this.sautoinc || 0;
@@ -158,14 +163,14 @@ class Character
     return this.hp / this.maxhp * 100;
   }
   
-  sdcPercentage()
+  sdcmdcPercentage()
   {
-    this.sdc = Number(this.sdc);
-    this.maxsdc = Number(this.maxsdc)
-    if (this.sdc > this.maxsdc)
-    this.maxsdc = this.sdc;
-    this.sdcpct = this.sdc / this.maxsdc;
-    return this.sdc / this.maxsdc * 100;
+    this.sdcmdc = Number(this.sdcmdc);
+    this.maxsdcmdc = Number(this.maxsdcmdc)
+    if (this.sdcmdc > this.maxsdcmdc)
+    this.maxsdcmdc = this.sdcmdc;
+    this.sdcmdcpct = this.sdcmdc / this.maxsdcmdc;
+    return this.sdcmdc / this.maxsdcmdc * 100;
   }
   
   updateChar(c, callback)
@@ -254,8 +259,33 @@ class Character
         {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
         {number: "Amount"}
       ]);
-      //TODO    
       
+      
+      $(".form-control").attr('autocomplete','off');
+      $.get("armor.json", function(data){
+        $("[name=armor]").typeahead({ source:data });
+      },'json');
+      
+      $('#equip-armor-' + character.id).submit(
+      function(a) { 
+        a.preventDefault();
+        var ar = $('#equip-armor-' + character.id).serializeObject();
+        if (ar["armor"])
+        { 
+          
+          if (ar["damage-type"] == "Damage type")
+            ar["damage-type"] = "MDC";
+          
+          while (character.armor[character.aautoinc])
+          {
+            character.aautoinc++;
+          }
+          ar.id =  ar.id || character.aautoinc;
+          character.armor[character.aautoinc] = ar;
+          c.updateChar(character);
+          $(this).fadeOut();
+        }
+      });      
       break; 
       
       
@@ -264,8 +294,15 @@ class Character
       [
         {opt: "Unequip", list: character.armor, index: "armor"}
       ]);
-      //TODO    
       
+      $('#unequip-armor-' + character.id).submit(
+      function(a) { 
+        a.preventDefault();
+        let ar = $('#unequip-armor-' + character.id).serializeObject();
+        delete character.armor[ar["unequip"] - 1];
+        c.updateChar(character);
+        $(this).fadeOut();
+      });      
       
       break; 
       
@@ -298,7 +335,9 @@ class Character
         index2: "damage"
       }
       ]);
-      
+ 
+      $('[data-toggle="popover"]').popover();
+
       break;
       
       
@@ -376,7 +415,7 @@ class Character
       
       case "armor":
       return [
-      "equipArmor","unequipArmor","editHp","editXdc"];
+      "equipArmor","unequipArmor","viewArmor","editHp","editXdc"];
       
       case "exp":
       return [

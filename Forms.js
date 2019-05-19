@@ -63,14 +63,18 @@ class Form
         let min = object[i]["min"] || 0;
 
         let field = this.formatField(name);
-        html += `<label class="small">${name}</label><input type="number" min="${min}" max="${max}" class="form-control form-control-sm required order-1" placeholder="${name}" name="${field}">`;
+        html += `<label class="small">${name}</label><input type="number" required min="${min}" max="${max}" class="form-control form-control-sm order-1" placeholder="${name}" name="${field}">`;
       }
+      
+      // Example: {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
+
       else if (object[i]["opt"])
       {
         let name = object[i]["opt"];
         let index = object[i]["index"];
         let list = object[i]["list"];
         let field = this.formatField(name);
+        
         html += `<label class="small">${name}</label>`;
         html += `<select class="custom-select form-control-sm" name="${field}">`;
         html += `<option selected>${name}</option>`;
@@ -90,9 +94,9 @@ class Form
         html+=`<div class="container">`;
         for (var c = 0; c < list.length; c++)
         {
-          html+=`<div class="row">`;
+          html+=`<div class="row small">`;
           if (list[c])
-              html+=`<div class="col" alt="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col">${list[c][index2]}</div>`;
+              html+=`<div class="col strong bg-info rounded m-1" data-toggle="popover" data-trigger="hover"  data-content="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col m-1">${list[c][index2]}</div>`;
 
           html+=`</div>`;
         }  
@@ -291,7 +295,7 @@ Combat Details
                                 </div>
                                 <div class="col">
                                     <label>S.D.C.<a data-toggle="popover" data-trigger="hover" tabindex="-1" class="badge character-command badge-pill badge-primary pointer" title="Physical S.D.C." data-html="true" data-content="Most humans and D-Bees get a certain amount of S.D.C. points to start. Each D.C.C. should indicate how many S.D.C. points a character gets. In the event that it does not, the character starts out w ith 2D6+12 S.D.C., plus any D.C.C. or R.C.C. bonuses. Many Physical skills provide additional S.D.C. All S.D.C. bonuses are accumulative, add them up to get the total S.D.C. of a given character.">?</a></label>
-                                    <input type="text" id="character-sdc" class="form-control form-control-sm" placeholder="" name="sdc">
+                                    <input type="text" id="character-sdcmdc" class="form-control form-control-sm" placeholder="" name="sdcmdc">
                                 </div>
                             </div>
                             <div class="form-row mt-2">
@@ -374,7 +378,7 @@ Progress
                                     <input type="hidden" name="magic">
                                     <input type="hidden" name="psionic">
                                     <input type="hidden" name="maxhp">
-                                    <input type="hidden" name="maxsdc">
+                                    <input type="hidden" name="maxsdcmdc">
                                     <input type="hidden" name="maxppe">
                                     <input type="hidden" name="maxisp">
                                     <input type="hidden" name="id">
@@ -401,7 +405,7 @@ const characterCard =
 </img><img src="psi.png" class="cardicon character-command m-1" data-character-command ="psi" data-character="{character.id}"/>
 
 <br /><br /><div class="entry-target" id="{character.id}-entry" data-character="{character.id}"></div> 
-<div class="m-1"><span data-character="{character.id}" class="exp">{character.exp}/{character.nextxp} xp </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="exp">+</a></div><div class="m-1"><span data-character="{character.id}" class="credits">{character.credits} credits </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="credits">+</a></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-success" role="progressbar" style="width: {character.sdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> {character.sdc} SDC</div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-danger" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.hp} HP</div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div><div class="btn-group" style="width: 100%;"><button type="button" class="btn btn-info m-1" data-toggle="edit" data-character="{character.id}">Edit</button><button type="button" class="btn btn-danger m-1" data-toggle="confirmation" data-character="{character.id}">Delete</button></div>	</div></div></div>`;
+<div class="m-1"><span data-character="{character.id}" class="exp">{character.exp}/{character.nextxp} xp </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="exp">+</a></div><div class="m-1"><span data-character="{character.id}" class="credits">{character.credits} credits </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="credits">+</a></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-success" role="progressbar" style="width: {character.sdcmdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> {character.sdcmdc} {character.dmgtype}</div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-danger" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.hp} HP</div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div><div class="btn-group" style="width: 100%;"><button type="button" class="btn btn-info m-1" data-toggle="edit" data-character="{character.id}">Edit</button><button type="button" class="btn btn-danger m-1" data-toggle="confirmation" data-character="{character.id}">Delete</button></div>	</div></div></div>`;
 
 
 const mainView = `<h1 class="display-4">Introduction</h1>
