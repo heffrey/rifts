@@ -65,9 +65,27 @@ class Form
         let field = this.formatField(name);
         html += `<label class="small">${name}</label><input type="number" required min="${min}" max="${max}" class="form-control form-control-sm order-1" placeholder="${name}" name="${field}">`;
       }
-      
-      // Example: {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
-
+      else if (object[i]["select"])
+      {
+        let name = object[i]["select"];
+        let index = object[i]["index"];
+        let id = object[i]["id"];
+        let list = object[i]["list"];
+        let field = this.formatField(name);
+        for (var c = 0; c < list.length; c++)
+        {
+          if (list[c])
+            if(list[c][index])
+            {
+              html += `<div class="col"><div class="card m-3" style="width: 200px;"><div class="card-header" id="${list[c][id]}"><h4>${list[c][index]}</h4></div>`;
+              html += `<div class="card-body"><div class="form-check"><input class="form-check-input" type="checkbox" value="" id="${list[c][id]}" checked><label>Selected?</label></div></div>`;
+              html += `</div> </div> `;
+              html += ``;
+          }
+        }
+        
+      }
+      // Example: {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"}
       else if (object[i]["opt"])
       {
         let name = object[i]["opt"];

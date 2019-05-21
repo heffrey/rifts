@@ -190,7 +190,7 @@ function common_charView()
       switch (optionSelected)
       {
         // data here is static. Not recommended to add dynamic data here.
-        // such as objects that are frequently updated.
+        // such as attributes that are frequently updated.
         case "credits":
         body = `Spend or gain credits`;
         break;
@@ -269,7 +269,7 @@ function refresh_char(a)
   common_writeChar()  
 }
 
-function common_charFunc()
+function common_charFunc(clicked)
 {
   $('[data-toggle="popover"]').popover();
   $('[data-toggle="collapse"]').collapse();
@@ -294,26 +294,25 @@ function setView_combat(callback)
   
   $(jumbotron).html(`<h1 class="display-4">Combat</h1>`);
   
-  var row = document.createElement("div");
-  row.className = "row";
-  $(jumbotron).append(row);
-  
-  $.each(characters, function(a,b) {
-    if (b)
-    $(row).append(`<div class="col">${b.name}</div>`);
-  });
-    
+  var combatBox = document.createElement("div");
+  combatBox.className = "row";
+  combatBox.id = "combat-box";
+  $(jumbotron).append(combatBox);
+
+  const combat = new Combat("root");
+  combat.begin(combatBox);
+
   $("#main-container").html(jumbotron);
   $("img.cardicon").css("cursor", "pointer");
   callback();
 }
 
-function setView_editChar(a)
+function setView_editChar(clicked)
 {
-  var character = characters[a.attr("data-character")];
+  var character = characters[clicked.attr("data-character")];
   setView_addChar(function() {
     
-    common_charFunc();
+    common_charFunc(clicked);
     $("h1").html(character.name);
     $("#player-create").html("Update");
     
@@ -352,7 +351,7 @@ function setView(clicked)
     break;
     
     case "#editchar":
-    setView_editChar();
+    setView_editChar(clicked);
     break;
     
     case "#delchar":
@@ -371,7 +370,7 @@ function setView(clicked)
 
 function setView_clicked (a)
 {
-  // a.preventDefault();
+  //a.preventDefault();
   var clicked = a.currentTarget.hash;
   setView(clicked);
 }  
