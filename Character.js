@@ -67,12 +67,12 @@ class Character
     this.wautoinc = this.wautoinc || 0;
     
     this.armor = this.armor || [];
-    this.aautoinc = this.aautoinc || 0;
     
     this.spell = this.spell || [];
-    this.sautoinc = this.sautoinc || 0;
     
   }
+  
+
   
   getExpType()
   {
@@ -107,8 +107,7 @@ class Character
   {
     $(`span.lvl[data-character=${this.id}]`).html(this.lvl);
     const f = new Form();
-    f.quickAlert(`<strong>${this.name}</strong> has leveled to ${this.lvl}.`);
-    //alert(this.lvl);
+    f.quickAlert(`<strong>${this.name}</strong> has leveled to <strong>level ${this.lvl}</strong>.`);
     return true;
   }
   
@@ -156,9 +155,11 @@ class Character
   hitpointPercentage()
   {
     this.hp = Number(this.hp);
+    
     this.maxhp = Number(this.maxhp)
+
     if (this.hp > this.maxhp)
-    this.maxhp = this.hp;
+      this.maxhp = this.hp;
     this.hppct = this.hp / this.maxhp;
     return this.hp / this.maxhp * 100;
   }
@@ -168,7 +169,7 @@ class Character
     this.sdcmdc = Number(this.sdcmdc);
     this.maxsdcmdc = Number(this.maxsdcmdc)
     if (this.sdcmdc > this.maxsdcmdc)
-    this.maxsdcmdc = this.sdcmdc;
+      this.maxsdcmdc = this.sdcmdc;
     this.sdcmdcpct = this.sdcmdc / this.maxsdcmdc;
     return this.sdcmdc / this.maxsdcmdc * 100;
   }
@@ -191,6 +192,13 @@ class Character
   
   
   // TODO: Generic Prototypes for WidgetObjectType
+  
+  // List of attributes that are objects 
+  objectAttributes()
+  {
+  return ["weapon","armor","loot","magic","vehicle","psi"];
+  }
+  
   doAction(action, character, element, callback)
   {
     
@@ -223,12 +231,8 @@ class Character
         { 
           w.damage = w.damage.toUpperCase();
           
-          while (character.weapon[character.wautoinc])
-          {
-            character.wautoinc++;
-          }
-          w.id =  w.id || character.wautoinc;
-          character.weapon[character.wautoinc] = w;
+          w.id =  w.id || character.weapon.length;
+          character.weapon[w.id] = w;
           c.updateChar(character);
           $(this).fadeOut();
         }
@@ -245,7 +249,7 @@ class Character
       function(a) { 
         a.preventDefault();
         let w = $('#drop-weapon-' + character.id).serializeObject();
-        delete character.weapon[w["drop"] - 1];
+        character.weapon[w["drop"]]["deleted"] = true;
         c.updateChar(character);
         $(this).fadeOut();
       });
@@ -273,15 +277,14 @@ class Character
         if (ar["armor"])
         { 
           
-          if (ar["damage-type"] == "Damage type")
+          if (ar["damage-type"] == "Damage type" || ar["damage-type"] == "0")
             ar["damage-type"] = "MDC";
+          else 
+            ar["damage-type"] = "SDC";
           
-          while (character.armor[character.aautoinc])
-          {
-            character.aautoinc++;
-          }
-          ar.id =  ar.id || character.aautoinc;
-          character.armor[character.aautoinc] = ar;
+          
+          ar.id =  ar.id || character.armor.length;
+          character.armor[ar.id] = ar;
           c.updateChar(character);
           $(this).fadeOut();
         }
@@ -299,34 +302,67 @@ class Character
       function(a) { 
         a.preventDefault();
         let ar = $('#unequip-armor-' + character.id).serializeObject();
-        delete character.armor[ar["unequip"] - 1];
+        character.armor[ar["unequip"]]["deleted"] = true;
         c.updateChar(character);
         $(this).fadeOut();
-      });      
-      
+      });
       break; 
       
       case "editHp":
       element.parentNode.innerHTML = f.quickForm("edit-hp-" + character.id,
       [
-        {number: "Maximum", min: 1}, 
-        {number: "Current"}
+        {number: "Maximum", min: 1, value: character.maxhp}, 
+        {number: "Current", value: character.hp}
       ]);
-      //TODO    
       
+      $("#edit-hp-" + character.id).submit(
+        (a) => 
+        {
+          a.preventDefault();
+          let hp = $('#edit-hp-' + character.id).serializeObject();
+          character.maxhp = hp["maximum"];
+          character.hp = hp["current"];
+          character.hitpointPercentage();
+          c.updateChar(character);          
+          $(`span.hp[data-character=${character.id}]`).html(`${character.hp} HP`);
+          $(`.progress-bar.hp[data-character=${character.id}]`).css("width",`${character.hppct * 100}%`);
+          if (character.hppct < 1)
+            $(`.progress-bar.hp[data-character=${character.id}]`).addClass("progress-bar-striped progress-bar-animated");
+          else
+             $(`.progress-bar.hp[data-character=${character.id}]`).removeClass("progress-bar-animated progress-bar-striped");
+        }
+      );
       break;
       
       case "editXdc":
       element.parentNode.innerHTML = f.quickForm("edit-xdc-" + character.id,
       [
-        {number: "Maximum"}, 
+        {number: "Maximum", value: character.maxsdcmdc}, 
         {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
-        {number: "Current"}
+        {number: "Current", value: character.sdcmdc}
       ]);
-      //TODO    
       
+      $("#edit-xdc-" + character.id).submit(
+        (a) =>
+        {
+          a.preventDefault();
+          let xdc = $('#edit-xdc-' + character.id).serializeObject(); 
+          character.dmgtype = xdc["damage-type"] == "0" ? "MDC" : "SDC";      
+          character.maxsdcmdc = xdc["maximum"];
+          character.sdcmdc = xdc["current"];
+          character.sdcmdcPercentage();
+          c.updateChar(character);          
+          $(`span.sdcmdc[data-character=${character.id}]`).html(`${character.sdcmdc} ${character.dmgtype}`);
+          $(`.progress-bar.sdcmdc[data-character=${character.id}]`).css("width",`${character.sdcmdcpct * 100}%`);
+          if (character.sdcmdcpct < 1)
+             $(`.progress-bar.sdcmdc[data-character=${character.id}]`).addClass("progress-bar-striped progress-bar-animated");
+          else
+             $(`.progress-bar.sdcmdc[data-character=${character.id}]`).removeClass("progress-bar-animated progress-bar-striped");
+          console.log($(`.progress-bar.sdcmdc[data-character=${character.id}]`).css())
+          
+        }
+      );
       break;
-      
       
       case "viewWeapons":
       element.parentNode.innerHTML = f.quickForm("view-weapon-" + character.id, [{
@@ -340,6 +376,15 @@ class Character
 
       break;
       
+      case "viewArmor":
+      element.parentNode.innerHTML = f.quickForm("view-armor-" + character.id, [{
+        list: character.armor,
+        index: "armor",
+        index2: "amount",
+        index3: "damage-type"}]
+      );
+      $('[data-toggle="popover"]').popover();
+     break;
       
       case "gainExp":
       element.parentNode.innerHTML = f.quickForm( "gain-exp-" + character.id, 

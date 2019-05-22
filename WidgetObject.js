@@ -24,6 +24,5 @@ class WidgetObject
     
     if (this.calculate)
       this.calculate();    
-  }
-  
+  } 
 }

@@ -63,7 +63,11 @@ class Form
         let min = object[i]["min"] || 0;
 
         let field = this.formatField(name);
-        html += `<label class="small">${name}</label><input type="number" required min="${min}" max="${max}" class="form-control form-control-sm order-1" placeholder="${name}" name="${field}">`;
+        
+        let value = object[i]["value"] ? `value="${object[i]["value"]}"` : ``;
+       
+          
+        html += `<label class="small">${name}</label><input type="number" required min="${min}" max="${max}" class="form-control form-control-sm order-1" placeholder="${name}" ${value} name="${field}">`;
       }
       else if (object[i]["select"])
       {
@@ -98,23 +102,28 @@ class Form
         html += `<option selected>${name}</option>`;
         for (var c = 0; c < list.length; c++)
         {
-          if (list[c])
+          if (list[c] && !list[c]["deleted"])
             if(list[c][index])
-              html+=`<option value="${c+1}">${list[c][index]}</option>`;
+              html+=`<option value="${c}">${list[c][index]}</option>`;
         }  
         html += `</select>`;
       }
       else if (object[i]["list"])
       {
         let index = object[i]["index"];
-        let index2 = object[i]["index2"]
+        let index2 = object[i]["index2"];
+        let index3 = object[i]["index3"] || false;
         let list = object[i]["list"];
         html+=`<div class="container">`;
         for (var c = 0; c < list.length; c++)
         {
           html+=`<div class="row small">`;
-          if (list[c])
-              html+=`<div class="col strong bg-info rounded m-1" data-toggle="popover" data-trigger="hover"  data-content="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col m-1">${list[c][index2]}</div>`;
+          if (list[c] && !list[c]["deleted"])
+          {
+              html+=`<div class="col bg-info text-white rounded m-1" data-toggle="popover" data-trigger="hover"  data-content="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col m-1 bg-info text-white rounded">${list[c][index2]}</div>`;
+              if (list[c][index3])
+              html+= `<div class="col m-1 bg-info text-white rounded">${list[c][index3]}</div>`
+          }
 
           html+=`</div>`;
         }  
@@ -423,7 +432,7 @@ const characterCard =
 </img><img src="psi.png" class="cardicon character-command m-1" data-character-command ="psi" data-character="{character.id}"/>
 
 <br /><br /><div class="entry-target" id="{character.id}-entry" data-character="{character.id}"></div> 
-<div class="m-1"><span data-character="{character.id}" class="exp">{character.exp}/{character.nextxp} xp </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="exp">+</a></div><div class="m-1"><span data-character="{character.id}" class="credits">{character.credits} credits </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="credits">+</a></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-success" role="progressbar" style="width: {character.sdcmdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"> {character.sdcmdc} {character.dmgtype}</div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-danger" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.hp} HP</div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div><div class="btn-group" style="width: 100%;"><button type="button" class="btn btn-info m-1" data-toggle="edit" data-character="{character.id}">Edit</button><button type="button" class="btn btn-danger m-1" data-toggle="confirmation" data-character="{character.id}">Delete</button></div>	</div></div></div>`;
+<div class="m-1"><span data-character="{character.id}" class="exp">{character.exp}/{character.nextxp} xp </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="exp">+</a></div><div class="m-1"><span data-character="{character.id}" class="credits">{character.credits} credits </span><a href="#" class="badge character-command badge-pill badge-primary pointer" data-character="{character.id}" data-character-command="credits">+</a></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-success sdcmdc" data-character="{character.id}" role="progressbar" style="width: {character.sdcmdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span data-character="{character.id}" class="sdcmdc"> {character.sdcmdc} {character.dmgtype}</span></div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-danger hp" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" data-character="{character.id}"><span data-character="{character.id}" class="hp">{character.hp} HP</span></div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div><div class="btn-group" style="width: 100%;"><button type="button" class="btn btn-info m-1" data-toggle="edit" data-character="{character.id}">Edit</button><button type="button" class="btn btn-danger m-1" data-toggle="confirmation" data-character="{character.id}">Delete</button></div>	</div></div></div>`;
 
 
 const mainView = `<h1 class="display-4">Introduction</h1>

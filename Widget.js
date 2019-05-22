@@ -138,7 +138,7 @@ class Widget {
         for (var i = 0; i < object.options.length; i++)
         {
 
-          this.widget += `<a class="widget-option btn btn-info btn-sm m-1" data-action="${object.options[i]}" data-${object.name}="${object.object.id}">${object.options[i]}</a>`;
+          this.widget += `<a class="widget-option btn btn-info text-white btn-sm m-1" data-action="${object.options[i]}" data-${object.name}="${object.object.id}">${object.options[i]}</a>`;
         }
       }        
       object.target.innerHTML = this.widget;

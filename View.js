@@ -28,7 +28,6 @@ $(function () {
 $(function () {
   $("a").click(function (a) { 
     setView_clicked (a); 
-    //$(".popover").remove();
   })
 });
 
@@ -71,21 +70,24 @@ function common_writeChar()
   
   var character = $("#character-form").serializeObject();
   characters = characters || [];
+  
   while (characters[characterAutoIncrement])
   {
     characterAutoIncrement += 1;
   }
+ 
   character.id = character.id || characterAutoIncrement;
   character = new Character(character.id,character);
+  
   if (characters)
-  {
+  { 
+    character.objectAttributes().forEach( (attribute) =>
+    { 
+      character[attribute] = character[attribute] || [];
+      if (character[attribute] != []) 
+        character[attribute] = typeof character[attribute] == "string" ? JSON.parse(character[attribute]) : character[attribute];
+    });
     characters[character.id] = character;
-/*     characters[character.id]["weapon"] = characters[character.id]["weapon"] || [];
-    characters[character.id]["armor"] = characters[character.id]["armor"] || [];
-    characters[character.id]["vehicle"] = characters[character.id]["vehicle"] || [];
-    characters[character.id]["loot"] = characters[character.id]["loot"] || [];
-    characters[character.id]["magic"] = characters[character.id]["magic"] || [];
-    characters[character.id]["psi"] = characters[character.id]["psi"] || []; */
     localStorage.setItem("characters", JSON.stringify(characters));
   }
   else if (character.id != 0)
@@ -124,7 +126,7 @@ function setView_char (callback)
     $(characterLineup).append(character_card(character));
   });
   
-  $(jumbotron).append( `<a href="#addchar" class="btn btn-info btn-lg m-1 addchr">Add</button>`);
+  $(jumbotron).append( `<a href="#addchar" class="btn btn-primary btn-lg m-1 addchr">Add</button>`);
   
   $("#main-container").html(jumbotron);
   $("img.cardicon").css("cursor", "pointer");
@@ -316,8 +318,12 @@ function setView_editChar(clicked)
     $("h1").html(character.name);
     $("#player-create").html("Update");
     
-    $.each(character, function(a,b){
-      $(`[name=${a}]`).val(b);
+    $.each(character, function(key,value){
+      console.info(`${key} ${value} ${typeof value}`)
+     //if (true)
+      //$(`[name=${key}]`).val(value);
+     //else
+      typeof value == "object" ? $(`[name=${key}]`).val(JSON.stringify(value)) : $(`[name=${key}]`).val(value);
     });
     
   });
