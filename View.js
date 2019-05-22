@@ -100,7 +100,7 @@ function character_card (characterObject)
 {
   try {
     var w = new Widget();
-    c = new Character(characterObject.id, characterObject)
+    c = new Character(characterObject.id, characterObject);
     return (w.html(characterCard,c ,"character"));
   }
     catch (e)
