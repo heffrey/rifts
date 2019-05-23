@@ -83,7 +83,7 @@ class Form
             {
               html += `<div class="col"><div class="card m-3" style="width: 200px;"><div class="card-header" id="${list[c][id]}"><h4>${list[c][index]}</h4></div>`;
               html += `<div class="card-body"><div class="form-check"><input class="form-check-input" type="checkbox" value="" id="${list[c][id]}" checked><label>Selected?</label></div></div>`;
-              html += `</div>`;
+              html += `</div></div></div>`;
               html += ``;
           }
         }
@@ -439,5 +439,4 @@ const mainView = `<h1 class="display-4">Introduction</h1>
 <p class="lead"><img src="./rifts.jpg" class="rounded float-right p-3 w-auto" alt="">
 <strong>RIFTS&reg Campaign Manager</strong> is a light-weight web application that uses your browser's localStorage (similar to cookies), to ensure your campaign can continue right where you left off. Initially developed for fun and to learn more about the Megaverse&reg, this project is open source under the MIT License with no intention to ever make a profit. Please support Palladium Books&reg by purchasing source materials on the <a href="https://palladium-store.com">official website</a>, a licensed PDF resaler such as <a href="https://www.drivethrurpg.com/#">DriveThruRPG</a>, or your local hobby shop.</p>
 `;
-
 
