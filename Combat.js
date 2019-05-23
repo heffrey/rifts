@@ -42,7 +42,7 @@ class Combat extends WidgetObject
     this.target = target;
     console.log(this);
     
-    let html = `<div class=“row”>`;
+    let html = `<div class=“col”>`;
     
     switch (this.turn)
     {
