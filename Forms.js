@@ -83,7 +83,7 @@ class Form
             {
               html += `<div class="col"><div class="card m-3" style="width: 200px;"><div class="card-header" id="${list[c][id]}"><h4>${list[c][index]}</h4></div>`;
               html += `<div class="card-body"><div class="form-check"><input class="form-check-input" type="checkbox" value="" id="${list[c][id]}" checked><label>Selected?</label></div></div>`;
-              html += `</div> </div> `;
+              html += `</div>`;
               html += ``;
           }
         }
