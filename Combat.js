@@ -42,7 +42,7 @@ class Combat extends WidgetObject
     this.target = target;
     console.log(this);
     
-    let html = ``;
+    let html = `<div class=“col”>`;
     
     switch (this.turn)
     {
@@ -51,7 +51,7 @@ class Combat extends WidgetObject
         html += this.getCharacters();
         break;
     }
-    
+    html += `</div>`;
     $(target).html(`${html}`);
   }
   
