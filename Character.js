@@ -63,6 +63,10 @@ class Character
     
     this.credits = this.credits || 0;    
     
+    this.atk = this.atk || 2; // atk per melee
+    this.init = this.init || 0; // init bonus
+    this.strike = this.strike || 0;
+    
     this.weapon = this.weapon || [];
     this.wautoinc = this.wautoinc || 0;
     
@@ -160,7 +164,7 @@ class Character
 
     if (this.hp > this.maxhp)
       this.maxhp = this.hp;
-    this.hppct = this.hp / this.maxhp;
+    this.hppct = this.hp / this.maxhp * 100;
     return this.hp / this.maxhp * 100;
   }
   
@@ -170,7 +174,7 @@ class Character
     this.maxsdcmdc = Number(this.maxsdcmdc)
     if (this.sdcmdc > this.maxsdcmdc)
       this.maxsdcmdc = this.sdcmdc;
-    this.sdcmdcpct = this.sdcmdc / this.maxsdcmdc;
+    this.sdcmdcpct = this.sdcmdc / this.maxsdcmdc * 100;
     return this.sdcmdc / this.maxsdcmdc * 100;
   }
   
@@ -261,7 +265,8 @@ class Character
       [
         {inputr: "Armor"}, 
         {opt: "Damage type", list: [{type: "MDC"}, {type:"SDC"}], index: "type"},
-        {number: "Amount"}
+        {number: "Amount"},
+        {btn: "Equip"}
       ]);
       
       
@@ -322,10 +327,10 @@ class Character
           let hp = $('#edit-hp-' + character.id).serializeObject();
           character.maxhp = hp["maximum"];
           character.hp = hp["current"];
-          character.hitpointPercentage();
+          character.hppct = character.hitpointPercentage();
           c.updateChar(character);          
           $(`span.hp[data-character=${character.id}]`).html(`${character.hp} HP`);
-          $(`.progress-bar.hp[data-character=${character.id}]`).css("width",`${character.hppct * 100}%`);
+          $(`.progress-bar.hp[data-character=${character.id}]`).css("width",`${character.hppct}%`);
           if (character.hppct < 1)
             $(`.progress-bar.hp[data-character=${character.id}]`).addClass("progress-bar-striped progress-bar-animated");
           else
@@ -350,10 +355,10 @@ class Character
           character.dmgtype = xdc["damage-type"] == "0" ? "MDC" : "SDC";      
           character.maxsdcmdc = xdc["maximum"];
           character.sdcmdc = xdc["current"];
-          character.sdcmdcPercentage();
+          character.sdcmdcpct = character.sdcmdcPercentage();
           c.updateChar(character);          
           $(`span.sdcmdc[data-character=${character.id}]`).html(`${character.sdcmdc} ${character.dmgtype}`);
-          $(`.progress-bar.sdcmdc[data-character=${character.id}]`).css("width",`${character.sdcmdcpct * 100}%`);
+          $(`.progress-bar.sdcmdc[data-character=${character.id}]`).css("width",`${character.sdcmdcpct}%`);
           if (character.sdcmdcpct < 1)
              $(`.progress-bar.sdcmdc[data-character=${character.id}]`).addClass("progress-bar-striped progress-bar-animated");
           else
@@ -368,7 +373,8 @@ class Character
       element.parentNode.innerHTML = f.quickForm("view-weapon-" + character.id, [{
         list: character.weapon, 
         index: "weapon",
-        index2: "damage"
+        index2: "damage",
+        noBtn: true
       }
       ]);
  

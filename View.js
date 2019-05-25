@@ -58,7 +58,7 @@ function deleteCharacter(character)
   characterDetails,
   "character",
   function() { 
-    delete characters[Number(character)];
+    characters[Number(character)]["deleted"]=true;
     localStorage.setItem("characters",JSON.stringify(characters));
   $(`[data-character-card="${characterDetails.id}"]`).fadeOut();}
   ));
@@ -71,10 +71,7 @@ function common_writeChar()
   var character = $("#character-form").serializeObject();
   characters = characters || [];
   
-  while (characters[characterAutoIncrement])
-  {
-    characterAutoIncrement += 1;
-  }
+  characterAutoIncrement = characters.length;
  
   character.id = character.id || characterAutoIncrement;
   character = new Character(character.id,character);
@@ -99,7 +96,7 @@ function common_writeChar()
 function character_card (characterObject)
 {
   try {
-    var w = new Widget();
+    const w = new Widget();
     c = new Character(characterObject.id, characterObject);
     return (w.html(characterCard,c ,"character"));
   }
@@ -115,15 +112,14 @@ function setView_char (callback)
   
   $(jumbotron).html(`<h1 class="display-4">Characters</h1>`);
   
-  getCharacters();	
   
   var characterLineup = document.createElement("div");
   characterLineup.className = "row";
   $(jumbotron).append(characterLineup);
   
   $.each(characters, function(a,character) {
-    if (character)
-    $(characterLineup).append(character_card(character));
+    if (character && !character["deleted"])
+      $(characterLineup).append(character_card(character));
   });
   
   $(jumbotron).append( `<a href="#addchar" class="btn btn-primary btn-lg m-1 addchr">Add</button>`);
@@ -301,12 +297,10 @@ function setView_combat(callback)
   combatBox.id = "combat-box";
   $(jumbotron).append(combatBox);
 
-  const combat = new Combat("root");
-  combat.begin(combatBox);
-
   $("#main-container").html(jumbotron);
   $("img.cardicon").css("cursor", "pointer");
-  callback();
+
+  callback(combatBox);
 }
 
 function setView_editChar(clicked)
@@ -334,7 +328,8 @@ function setView(clicked)
 { 
   // $("#main-container").hide();
   //$('.popover').fadeOut().remove();
-  
+  getCharacters();	
+
   switch (clicked)
   {
     
@@ -365,7 +360,9 @@ function setView(clicked)
     break;
     
     case "#combat":
-    setView_combat(function() { 
+    setView_combat(function(combatBox) {     
+      const combat = combatHistory.length > 0 ? new Combat("cont", combatHistory[combatHistory.length-1]): new Combat("root");
+      combat.begin(combatBox); 
     });
     break;
     

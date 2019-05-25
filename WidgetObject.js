@@ -16,9 +16,7 @@ class WidgetObject
       
       this.id = arguments[0];
     }
-    
-    this.name = String(this.name);
-    
+        
     if (this.populate)
       this.populate();
     
