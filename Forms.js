@@ -399,7 +399,7 @@ hobbies and other interests.">?</a></label>
 </div>
 </div>
 
-
+<!--
 <div class="card">
 <div class="card-header" id="character-skills">
 <h5 class="mb-0">
@@ -427,6 +427,7 @@ Skills
 </div>
 </div>
 
+-->
 
 <div class="card">
 <div class="card-header" id="character-progress">
@@ -479,18 +480,18 @@ Progress
 </div>
 </div>`
 
-const combatCard = `<div class="col-sm-2" style="float: left;" data-character-card="{character.id}">
+const combatCard = `<div class="col-sm-0 m-0 ml-2" style="float: left; width=100px;" data-character-card="{character.id}">
 <div class="card m-0" style="width: 100px;">
-<div class="card-header">
-  <small>{character.name}</small>
+<div class="card-header m-0 p-0">
+<small>{character.name} <br />Init: {character.initiative}</small>
 </div>
-<div class="card-body">
-<img src="sword.png" class="cardicon character-command m-1 widget-target" data-combat-command="weapon" data-character="{character.id}" />
-<img src="armor.png" class="cardicon character-command m-1 widget-target" data-combat-command="armor" data-character="{character.id}" />
 
-<br /><br />
+<div class="card-body m-0 p-0">
+
+<small>Atk Ddge Mv</small>
+
 <div class="entry-target" id="{character.id}-entry" data-character="{character.id}"></div> 
-<div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-success sdcmdc" data-character="{character.id}" role="progressbar" style="width: {character.sdcmdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span data-character="{character.id}" class="sdcmdc"> {character.sdcmdc} {character.dmgtype}</span></div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-danger hp" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" data-character="{character.id}"><span data-character="{character.id}" class="hp">{character.hp} HP</span></div></div><div class="progress m-1" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-1" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div></div></div></div>`;
+<div class="progress m-0" style="height: 24px;"><div class="progress-bar bg-success sdcmdc" data-character="{character.id}" role="progressbar" style="width: {character.sdcmdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span data-character="{character.id}" class="sdcmdc"> {character.sdcmdc} {character.dmgtype}</span></div></div><div class="progress m-0" style="height: 24px;"><div class="progress-bar bg-danger hp" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" data-character="{character.id}"><span data-character="{character.id}" class="hp">{character.hp} HP</span></div></div><div class="progress m-0" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-0" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div></div></div></div>`;
 
 const characterCard = 
 `<div class="col" data-character-card="{character.id}"><div class="card m-3" style="width: 275px;"><div class="card-header"><h4>{character.name}</h4><h5>Level: <span data-character="{character.id}" class="lvl" >{character.lvl}</span></h5><h6>{character.occrcc}</h6></div><div class="card-body"><img src="head.png" class="cardicon character-command widget-target" data-character-command="character" data-character="{character.id}" style="position: relative; float: left; margin-right: .85rem;">

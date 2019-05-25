@@ -2,6 +2,29 @@
 
 var combatHistory = [];
 
+
+function countToWord(number)
+{
+   const map = [
+   "Null",
+   "First",
+   "Second",
+   "Third",
+   "Fourth",
+   "Fifth",
+   "Sixth",
+   "Seventh",
+   "Eightth",
+   "Ninth",
+   "Tenth",
+   "Eleventh",
+   "Twelfth",
+   "Thirteenth",
+   "Fourteenth",
+   "Fifteenth"];
+   return map[number];
+}
+
 // Get characters (who will fight)
 // Get initiatives
 // Apply bonuses to initiatives
@@ -155,6 +178,7 @@ class Combat extends WidgetObject
           console.log(inputs[i].value + "+=" + this.characters[inputs[i].name].initiative);
         };
         this.characters.sort((a, b) => a.initiative < b.initiative);
+        this.characters.forEach((a) => window.alert(a.atk));
         console.log(this.characters);
         this.turn = "FIGHT";
         this.meleeround += 1;
@@ -178,7 +202,7 @@ class Combat extends WidgetObject
   
   FIGHT()
   {
-    let html = `<h3>Melee Round ${this.meleeround}</h3><div class="row">`;
+    let html = `<h4 class="ml-0">Melee Round ${this.meleeround}</h4><h5 class="ml-0">${countToWord(this.attackround)}  Attack Round</h5><div class="row">`;
     
     for (let i = 0; i<this.characters.length; i ++)
     {
