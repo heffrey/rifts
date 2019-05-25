@@ -88,6 +88,10 @@ class Combat extends WidgetObject
       case "FIGHT":
       html += this.FIGHT();
       break;
+      
+      case "ACTION":
+      
+      break;
     }
     html += `</div>`;
     if ($(target).html(`${html}`) && this.next)
@@ -98,7 +102,8 @@ class Combat extends WidgetObject
   
   endTurn ()
   {
-    combatHistory[combatHistory.length] = this;
+    const last = new Combat(combatHistory.length, this);
+    combatHistory[combatHistory.length] = last;
     this.begin(this.target);
   }
   
@@ -178,11 +183,24 @@ class Combat extends WidgetObject
           console.log(inputs[i].value + "+=" + this.characters[inputs[i].name].initiative);
         };
         this.characters.sort((a, b) => a.initiative < b.initiative);
-        this.characters.forEach((a) => window.alert(a.atk));
+        
+        //  this.characters.forEach((a) => window.alert(a.atk));
         console.log(this.characters);
         this.turn = "FIGHT";
+        
         this.meleeround += 1;
         this.attackround += 1;
+        
+        this.maxAtk = 2;
+
+        if (this.attackround == 1) //Set atkRem - i.e. Attacks remaining 
+          this.characters.forEach((a) =>  
+            {
+              this.maxAtk = a.atk > this.maxAtk ? a.atk : this.maxAtk;
+              a.atkRem = Number(a.atk)
+            });
+        else
+          this.characters.forEach((a) =>  a.atkRem -= 1);
 
         this.endTurn();
       });
@@ -210,23 +228,28 @@ class Combat extends WidgetObject
       html += this.combatCard(this.characters[i]);
       
     }
-    document.combatWidgets = new Widget({
+
+    this.next = () =>
+    {
+      document.combatWidgets = new Widget({
       selectClass: "combat-command",
       relyOn: "character",
-      fromList: this.characters,
+      fromList: characters,
       structuredAs: function(a, b){ return new Character (a,b)},
       widget: function (callingWidget, object, optionSelected) { 
-        let head = `<h5>${optionCategories[optionSelected]}</h5>`;
+        let head = `<h5>${optionSelected}</h5>`;
         let c = new Character(object.id, object);
         let body = ``;
         switch (optionSelected)
         {
-          case "attack":
-          body = `Attack`;
+          case "atk":
           break;
         }
+        return `test`;
       }
-      });
+      });  
+      
+    }
     html += `</div>`;
     return html;
   }

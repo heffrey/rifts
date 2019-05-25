@@ -53,7 +53,27 @@ class Form
       
       let sz = size == "sm" ? "form-control-sm" : "";
       
-      if (object[i]["input"])
+      // General options. Optional attributes (e.g. noBtn, button)
+      for (let attr in object[i])
+      {
+        switch (attr)
+        {
+          case "noBtn":
+          noBtn = object[i]["noBtn"];
+          break;
+          case "size":
+          size = object[i]["size"];  
+          break;
+          case "button":
+          case "btn":
+          btn = object[i]["button"] || object[i]["btn"];	
+          break;
+          
+        }
+      }
+
+      // Singleton options. You can only have one of these
+      if ([i]["input"])
       {
         let name = object[i]["input"];
         let index = object[i]["index"] || object[i]["input"];
@@ -83,18 +103,7 @@ class Form
         
         html += `<label class="small">${name}</label><input type="number" required min="${min}" max="${max}" class="form-control ${sz} order-1" placeholder="${holder}" ${value} name="${field}">`;
       }
-      else if (object[i]["size"])
-      {
-        size = object[i]["size"];
-      } 
-      else if (object[i]["button"] || object[i]["btn"])
-      {
-        btn = object[i]["button"] || object[i]["btn"];	
-      }
-      else if (object[i]["noBtn"])
-      {
-        noBtn = object[i]["noBtn"];
-      }
+
       else if (object[i]["select"])
       {
         let name = object[i]["select"];
@@ -154,24 +163,33 @@ class Form
         let index3 = object[i]["index3"] || false;
         let list = object[i]["list"] || [];
         html+=`<div class="container">`;
-        if (list.length)
+        if (list.length != 0)
         {
           for (var c = 0; c < list.length; c++)
           {
-            html+=`<div class="row small">`;
+            html+=  `<div class="row small">`;
+            html+=  `  <div class="col bg-info text-white rounded m-1">${index}</div>
+                       <div class="col m-1 bg-info text-white rounded">${index2}</div>`;
+           if (list[c][index3])
+              html+= `<div class="col m-1 bg-info text-white rounded">${index3.substring(0,3)}</div>`
+           
+           html+=  `</div>`;
+            
             if (list[c] && !list[c]["deleted"])
             {
-              html+=`<div class="col bg-info text-white rounded m-1" data-toggle="popover" data-trigger="hover"  data-content="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col m-1 bg-info text-white rounded">${list[c][index2]}</div>`;
+              html+=`<div class="row small">`;
+
+              html+=`<div class="col bg-secondary text-white rounded m-1" data-toggle="popover" data-trigger="hover"  data-content="${list[c][index]}">${list[c][index].substring(0,11)}.</div><div class="col m-1 bg-secondary text-white rounded">${list[c][index2]}</div>`;
               if (list[c][index3])
-              html+= `<div class="col m-1 bg-info text-white rounded">${list[c][index3]}</div>`
+              html+= `<div class="col m-1 bg-secondary text-white rounded">${list[c][index3]}</div>`
+              html+=`</div>`;
             }
             
-            html+=`</div>`;
           } 
         }
         else 
         {
-          html += "Empty";
+          html += `No ${index} items`;
         }
         html += `</div>`;
       }
@@ -182,6 +200,7 @@ class Form
     }
     let sz = size == "small" ? "btn-sm" : "";
    // html += `</div><div class="row">`
+   if (!noBtn)
     html +=  `<button type="submit" class="btn btn-primary ${sz} m-1">${btn}</button></form>`;
    // html += `</div`;
     return html;
@@ -399,36 +418,6 @@ hobbies and other interests.">?</a></label>
 </div>
 </div>
 
-<!--
-<div class="card">
-<div class="card-header" id="character-skills">
-<h5 class="mb-0">
-<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-skills" aria-expanded="false" aria-controls="collapse-skills">
-Skills
-</button>
-</h5>
-</div>
-<div id="collapse-skills" class="collapse" aria-labelledby="collapse-skills" data-parent="#character-accordion">
-<div class="card-body">
-</div>
-</div>
-</div>
-<div class="card">
-<div class="card-header" id="character-skills">
-<h5 class="mb-0">
-<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-skills" aria-expanded="false" aria-controls="collapse-skills">
-Skills
-</button>
-</h5>
-</div>
-<div id="collapse-skills" class="collapse" aria-labelledby="collapse-skills" data-parent="#character-accordion">
-<div class="card-body">
-</div>
-</div>
-</div>
-
--->
-
 <div class="card">
 <div class="card-header" id="character-progress">
 <h5 class="mb-0">
@@ -481,14 +470,31 @@ Progress
 </div>`
 
 const combatCard = `<div class="col-sm-0 m-0 ml-2" style="float: left; width=100px;" data-character-card="{character.id}">
+<div class="modal fade" id="share12" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content get_direction_modal_bg">
+          <div class="text-right">
+            <a class="close m-1" data-dismiss="modal">x</a>
+          </div>
+            <div class="modal-body">
+              <div class="entry-target" id="{character.id}-entry" data-character="{character.id}"></div> 
+              <div class="m-1">                
+              </div>
+            </div>
+      </div>
+  </div>
+</div>
 <div class="card m-0" style="width: 100px;">
 <div class="card-header m-0 p-0">
-<small>{character.name} <br />Init: {character.initiative}</small>
+<small>{character.name} <br />Init: {character.initiative} <br \>Atks: {character.atkRem}</small>
 </div>
 
 <div class="card-body m-0 p-0">
 
-<small>Atk Ddge Mv</small>
+<small>
+  <a href="#" data-combat-command="atk" data-character="{character.id}" class="combat-command">Atk</a>
+  Ddg Mv Eqp Rld Skl Mgc Psi  Use
+</small>
 
 <div class="entry-target" id="{character.id}-entry" data-character="{character.id}"></div> 
 <div class="progress m-0" style="height: 24px;"><div class="progress-bar bg-success sdcmdc" data-character="{character.id}" role="progressbar" style="width: {character.sdcmdcpct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"><span data-character="{character.id}" class="sdcmdc"> {character.sdcmdc} {character.dmgtype}</span></div></div><div class="progress m-0" style="height: 24px;"><div class="progress-bar bg-danger hp" role="progressbar" style="width: {character.hppct}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" data-character="{character.id}"><span data-character="{character.id}" class="hp">{character.hp} HP</span></div></div><div class="progress m-0" style="height: 24px;"><div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.ppe} PPE</div> </div><div class="progress m-0" style="height: 24px;"><div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">{character.isp} ISP</div></div></div></div></div>`;

@@ -131,6 +131,12 @@ class Widget {
     $(this.clickPoint).click(
     function(clicked){
       clicked.preventDefault();
+      
+      console.log(object.target);
+      console.log(object.target.parentElement.parentElement.parentElement.parentElement);
+      
+      // Do this in the event that entry-point is stuck in a hidden modal...
+      $(object.target.parentElement.parentElement.parentElement.parentElement).modal('show');
       object.target.innerHTML = object.widget;
       if (object.options)
       {

@@ -219,7 +219,8 @@ class Character
         {inputr: "Weapon"}, 
         {number: "Range (yards)"}, 
         {inputr: "Damage"}, 
-        {number: "Payload"}
+        {number: "Payload"},
+        {button: "Equip"}
       ]);
 
       $(".form-control").attr('autocomplete','off');
@@ -387,7 +388,8 @@ class Character
         list: character.armor,
         index: "armor",
         index2: "amount",
-        index3: "damage-type"}]
+        index3: "damage-type",
+        noBtn: "true"}]
       );
       $('[data-toggle="popover"]').popover();
      break;
@@ -458,6 +460,9 @@ class Character
   {
     switch (type)
     {
+      case "atk":
+      return [];
+      
       case "weapon":
       return [
         "addWeapon", 
