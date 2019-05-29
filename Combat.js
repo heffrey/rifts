@@ -237,12 +237,13 @@ class Combat extends WidgetObject
       fromList: characters,
       structuredAs: function(a, b){ return new Character (a,b)},
       widget: function (callingWidget, object, optionSelected) { 
-        let head = `<h5>${optionSelected}</h5>`;
+        let head = `<h5>${console.log(optionSelected)}</h5>`;
         let c = new Character(object.id, object);
         let body = ``;
         switch (optionSelected)
         {
           case "atk":
+          return `<h2>${c.name}</h2> Attack`;
           break;
         }
         return `test`;

@@ -132,11 +132,11 @@ class Widget {
     function(clicked){
       clicked.preventDefault();
       
-      console.log(object.target);
-      console.log(object.target.parentElement.parentElement.parentElement.parentElement);
       
-      // Do this in the event that entry-point is stuck in a hidden modal...
-      $(object.target.parentElement.parentElement.parentElement.parentElement).modal('show');
+      //  TODO: Implement switch
+      if (clicked.target.className.lastIndexOf("combat-command") == 0)
+        $(object.target.parentElement.parentElement.parentElement.parentElement).modal('show');
+        
       object.target.innerHTML = object.widget;
       if (object.options)
       {

@@ -474,9 +474,9 @@ const combatCard = `<div class="col-sm-0 m-0 ml-2" style="float: left; width=100
   <div class="modal-dialog">
       <div class="modal-content get_direction_modal_bg">
           <div class="text-right">
-            <a class="close m-1" data-dismiss="modal">x</a>
           </div>
             <div class="modal-body">
+              <a class="close m-1" data-dismiss="modal">x</a>
               <div class="entry-target" id="{character.id}-entry" data-character="{character.id}"></div> 
               <div class="m-1">                
               </div>
